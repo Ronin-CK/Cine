@@ -116,7 +116,6 @@ class CineWindow(Adw.ApplicationWindow):
         self.volume_update_timer_id: int = 0
         self.aspect_index: int = 0
         self.inhibit_id: int = 0
-        self.shuffle: bool = False
         self.last_seek_scroll_time: float = 0
 
         self.mpv_ctx: mpv.MpvRenderContext
@@ -742,11 +741,13 @@ class CineWindow(Adw.ApplicationWindow):
         self.mpv.time_pos = adjustment.props.value
 
     def _on_shuffle_toggled(self, button):
-        self.shuffle = button.props.active
-        if self.shuffle:
+        if button.props.active:
             self.mpv.command("playlist-shuffle")
         else:
             self.mpv.command("playlist-unshuffle")
+
+        if dialog := cast(Playlist, self.get_visible_dialog()):
+            dialog._populate_list()
 
     def _on_loop_playlist_toggled(self, button):
         if button.props.active:
@@ -769,7 +770,7 @@ class CineWindow(Adw.ApplicationWindow):
         count: int = cast(int, self.mpv.playlist_count) or 0
         pos: int = cast(int, self.mpv.playlist_pos) or 0
         loop_list_enabled: bool = self.mpv.loop_playlist != False
-        shuffle_enabled: bool = self.shuffle
+        shuffle_enabled: bool = self.playlist_shuffle_toggle_button.props.active
 
         has_multiple: bool = count > 1
 
@@ -1105,8 +1106,7 @@ class CineWindow(Adw.ApplicationWindow):
             def update():
                 self._update_playlist_nav_sensitivity()
                 if dialog := cast(Playlist, self.get_visible_dialog()):
-                    if dialog.get_name() == "playlist":
-                        dialog._scroll_to_playing()
+                    dialog._scroll_to_playing()
 
             GLib.idle_add(update)
 
