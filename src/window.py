@@ -716,13 +716,14 @@ class CineWindow(Adw.ApplicationWindow):
             GLib.timeout_add(350, self.revealer_pause_indicator.set_reveal_child, False)
 
     def _update_duration(self, duration):
+        self.time_total_label.set_text(format_time(duration))
+
         if duration == 0:
             self.video_progress_scale.set_sensitive(False)
             return
         else:
             self.video_progress_scale.set_sensitive(True)
 
-        self.time_total_label.set_text(format_time(duration))
         self.video_progress_adjustment.set_upper(duration)
 
         if duration >= 86400:
@@ -1061,13 +1062,11 @@ class CineWindow(Adw.ApplicationWindow):
 
         @self.mpv.property_observer("time-pos")
         def on_time_change(_name, value):
-            if value:
-                GLib.idle_add(self._update_progress, value)
+            GLib.idle_add(self._update_progress, float(value or 0))
 
         @self.mpv.property_observer("duration")
         def on_duration_change(_name, value):
-            if value:
-                GLib.idle_add(self._update_duration, value)
+            GLib.idle_add(self._update_duration, float(value or 0))
 
         @self.mpv.property_observer("volume")
         def on_volume_change(_name, value):
