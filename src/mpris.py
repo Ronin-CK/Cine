@@ -143,7 +143,7 @@ class MPRIS:
         self.emit_properties_changed(
             "org.mpris.MediaPlayer2",
             {
-                "Identity": GLib.Variant("s", "Cine"),
+                "Identity": GLib.Variant("s", _("Cine")),
                 "DesktopEntry": GLib.Variant("s", APP_ID),
             },
         )
@@ -361,7 +361,7 @@ class MPRIS:
 
         if interface == "org.mpris.MediaPlayer2":
             if prop == "Identity":
-                return GLib.Variant("s", "Cine")
+                return GLib.Variant("s", _("Cine"))
             if prop == "DesktopEntry":
                 return GLib.Variant("s", APP_ID)
             if prop in ["CanQuit", "CanRaise"]:

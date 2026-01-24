@@ -123,8 +123,8 @@ class CineWindow(Adw.ApplicationWindow):
         self.mpv = mpv.MPV(
             # terminal=True,
             # log_handler=print,
-            audio_client_name="Cine",
             loglevel="info",
+            audio_client_name=_("Cine"),
             screenshot_directory=SCREENSHOT_DIR,
             screenshot_template="cine_%n",
             config=True,
@@ -214,7 +214,7 @@ class CineWindow(Adw.ApplicationWindow):
 
     def _setup_elements(self):
         self.set_default_size(1056, 594)
-        self.set_title("Cine")
+        self.set_title(_("Cine"))
         max_vol = cast(int, self.mpv.volume_max)
         self.volume_scale_adjustment.set_upper(max_vol)
 
@@ -1146,7 +1146,7 @@ class CineWindow(Adw.ApplicationWindow):
 
                 if is_idle:
                     self.revealer_ui.set_reveal_child(True)
-                    self.set_title("Cine")
+                    self.set_title(_("Cine"))
 
                 self._sync_inhibit()
 

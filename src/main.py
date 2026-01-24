@@ -207,7 +207,7 @@ class CineApplication(Adw.Application):
         """Callback for the app.about action."""
         APP_VERSION = getattr(sys.modules["__main__"], "VERSION")
         about = Adw.AboutDialog(
-            application_name="Cine",
+            application_name=_("Cine"),
             application_icon="io.github.diegopvlk.Cine",
             developer_name="Diego Povliuk",
             version=APP_VERSION,
