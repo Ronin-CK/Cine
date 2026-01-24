@@ -65,6 +65,8 @@ class Preferences(Adw.Dialog):
         )
         self.color_dialog_button.set_rgba(self.sub_color)
 
+        self.connect("closed", self._disconnect_settings)
+
     def _bind_ui(self):
         settings.bind(
             "open-new-windows",
@@ -104,13 +106,24 @@ class Preferences(Adw.Dialog):
         )
 
     def _setup_mpv_updates(self):
-        settings.connect("changed::subtitle-color", self._on_sub_color_changed)
-        settings.connect("changed::subtitle-scale", self._on_sub_scale_changed)
-        settings.connect("changed::subtitle-font", self._on_sub_font_changed)
-        settings.connect("changed::subtitle-languages", self._on_slang_changed)
-        settings.connect("changed::audio-languages", self._on_alang_changed)
-        settings.connect("changed::save-video-position", self._on_save_pos_changed)
-        settings.connect("changed::normalize-volume", self._on_norm_volume_changed)
+        handlers = {
+            "subtitle-color": self._on_sub_color_changed,
+            "subtitle-scale": self._on_sub_scale_changed,
+            "subtitle-font": self._on_sub_font_changed,
+            "subtitle-languages": self._on_slang_changed,
+            "audio-languages": self._on_alang_changed,
+            "save-video-position": self._on_save_pos_changed,
+            "normalize-volume": self._on_norm_volume_changed,
+        }
+
+        self._setting_ids = [
+            settings.connect(f"changed::{key}", callback)
+            for key, callback in handlers.items()
+        ]
+
+    def _disconnect_settings(self, *a):
+        for connection_id in self._setting_ids:
+            settings.disconnect(connection_id)
 
     def _on_sub_color_changed(self, settings, _key):
         self.player["sub-color"] = settings.get_string("subtitle-color")
