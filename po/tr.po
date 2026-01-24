@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-24 10:32-0300\n"
+"POT-Creation-Date: 2026-01-24 11:41-0300\n"
 "PO-Revision-Date: 2026-01-24 10:32-0300\n"
 "Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
@@ -18,7 +18,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.8\n"
 
-#: data/io.github.diegopvlk.Cine.desktop.in:2 src/window.blp:6
+#: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:210 src/mpris.py:146
+#: src/mpris.py:364 src/window.py:127 src/window.py:217 src/window.py:1149
+#: src/window.blp:6
 msgid "Cine"
 msgstr "Cine"
 
@@ -132,35 +134,35 @@ msgstr "5 sn Geri Sar"
 msgid "Seek 5s Forward"
 msgstr "5 sn İleri Sar"
 
-#: src/shortcuts.py:41 src/shortcuts.py:42 src/window.blp:939
+#: src/shortcuts.py:41 src/shortcuts.py:42 src/window.blp:944
 msgid "Fullscreen"
 msgstr "Tam Ekran"
 
 #: src/shortcuts.py:50 src/shortcuts.py:51 src/shortcuts.py:52
 #: src/shortcuts.py:53 src/shortcuts.py:54 src/window.py:1236
-#: src/window.py:1242 src/window.py:1247 src/window.blp:521
+#: src/window.py:1242 src/window.py:1247 src/window.blp:526
 msgid "Zoom"
 msgstr "Yaklaştırma"
 
 #: src/shortcuts.py:50 src/shortcuts.py:51 src/shortcuts.py:52
-#: src/window.blp:551
+#: src/window.blp:556
 msgid "Zoom In"
 msgstr "Yakınlaştır"
 
-#: src/shortcuts.py:53 src/shortcuts.py:54 src/window.blp:544
+#: src/shortcuts.py:53 src/shortcuts.py:54 src/window.blp:549
 msgid "Zoom Out"
 msgstr "Uzaklaştır"
 
 #: src/shortcuts.py:55 src/shortcuts.py:56 src/window.py:1318
-#: src/window.py:1324 src/window.py:1329 src/window.blp:786
+#: src/window.py:1324 src/window.py:1329 src/window.blp:791
 msgid "Subtitle Delay"
 msgstr "Alt Yazı Gecikmesi"
 
-#: src/shortcuts.py:55 src/window.blp:809
+#: src/shortcuts.py:55 src/window.blp:814
 msgid "Decrease Subtitle Delay"
 msgstr "Alt Yazı Gecikmesini Azalt"
 
-#: src/shortcuts.py:56 src/window.blp:816
+#: src/shortcuts.py:56 src/window.blp:821
 msgid "Increase Subtitle Delay"
 msgstr "Alt Yazı Gecikmesini Artır"
 
@@ -185,15 +187,15 @@ msgid "Mute/Unmute"
 msgstr "Sesi Kapat/Aç"
 
 #: src/shortcuts.py:60 src/shortcuts.py:61 src/shortcuts.py:62
-#: src/window.py:1336 src/window.py:1342 src/window.py:1347 src/window.blp:839
+#: src/window.py:1336 src/window.py:1342 src/window.py:1347 src/window.blp:844
 msgid "Audio Delay"
 msgstr "Ses Gecikmesi"
 
-#: src/shortcuts.py:60 src/window.blp:862
+#: src/shortcuts.py:60 src/window.blp:867
 msgid "Decrease Audio Delay"
 msgstr "Ses Gecikmesini Azalt"
 
-#: src/shortcuts.py:61 src/shortcuts.py:62 src/window.blp:869
+#: src/shortcuts.py:61 src/shortcuts.py:62 src/window.blp:874
 msgid "Increase Audio Delay"
 msgstr "Ses Gecikmesini Artır"
 
@@ -222,54 +224,54 @@ msgid "File Loop"
 msgstr "Dosya Döngüsü"
 
 #: src/shortcuts.py:80 src/shortcuts.py:81 src/window.py:1253
-#: src/window.py:1258 src/window.py:1263 src/window.blp:574
+#: src/window.py:1258 src/window.py:1263 src/window.blp:579
 msgid "Contrast"
 msgstr "Karşıtlık"
 
-#: src/shortcuts.py:80 src/window.blp:597
+#: src/shortcuts.py:80 src/window.blp:602
 msgid "Decrease Contrast"
 msgstr "Karşıtlığı Azalt"
 
-#: src/shortcuts.py:81 src/window.blp:604
+#: src/shortcuts.py:81 src/window.blp:609
 msgid "Increase Contrast"
 msgstr "Karşıtlığı Artır"
 
 #: src/shortcuts.py:82 src/shortcuts.py:83 src/window.py:1269
-#: src/window.py:1274 src/window.py:1279 src/window.blp:627
+#: src/window.py:1274 src/window.py:1279 src/window.blp:632
 msgid "Brightness"
 msgstr "Parlaklık"
 
-#: src/shortcuts.py:82 src/window.blp:650
+#: src/shortcuts.py:82 src/window.blp:655
 msgid "Decrease Brightness"
 msgstr "Parlaklığı Azalt"
 
-#: src/shortcuts.py:83 src/window.blp:657
+#: src/shortcuts.py:83 src/window.blp:662
 msgid "Increase Brightness"
 msgstr "Parlaklığı Artır"
 
 #: src/shortcuts.py:84 src/shortcuts.py:85 src/window.py:1285
-#: src/window.py:1290 src/window.py:1295 src/window.blp:680
+#: src/window.py:1290 src/window.py:1295 src/window.blp:685
 msgid "Gamma"
 msgstr "Gama"
 
-#: src/shortcuts.py:84 src/window.blp:703
+#: src/shortcuts.py:84 src/window.blp:708
 msgid "Decrease Gamma"
 msgstr "Gamayı Azalt"
 
-#: src/shortcuts.py:85 src/window.blp:710
+#: src/shortcuts.py:85 src/window.blp:715
 msgid "Increase Gamma"
 msgstr "Gamayı Artır"
 
 #: src/shortcuts.py:86 src/shortcuts.py:87 src/window.py:1301
-#: src/window.py:1306 src/window.py:1311 src/window.blp:733
+#: src/window.py:1306 src/window.py:1311 src/window.blp:738
 msgid "Saturation"
 msgstr "Doygunluk"
 
-#: src/shortcuts.py:86 src/window.blp:756
+#: src/shortcuts.py:86 src/window.blp:761
 msgid "Decrease Saturation"
 msgstr "Doygunluğu Azalt"
 
-#: src/shortcuts.py:87 src/window.blp:763
+#: src/shortcuts.py:87 src/window.blp:768
 msgid "Increase Saturation"
 msgstr "Doygunluğu Artır"
 
@@ -278,15 +280,15 @@ msgstr "Doygunluğu Artır"
 msgid "Speed"
 msgstr "Hız"
 
-#: src/shortcuts.py:88 src/window.blp:922
+#: src/shortcuts.py:88 src/window.blp:927
 msgid "Decrease Playback Speed"
 msgstr "Oynatma Hızını Azalt"
 
-#: src/shortcuts.py:89 src/window.blp:915
+#: src/shortcuts.py:89 src/window.blp:920
 msgid "Increase Playback Speed"
 msgstr "Oynatma Hızını Artır"
 
-#: src/shortcuts.py:90 src/window.blp:882
+#: src/shortcuts.py:90 src/window.blp:887
 msgid "Reset Playback Speed"
 msgstr "Oynatma Hızını Sıfırla"
 
@@ -331,7 +333,7 @@ msgid "Track"
 msgstr "Parça"
 
 #: src/window.py:479 src/shortcuts-dialog.blp:21 src/window.blp:86
-#: src/window.blp:1033
+#: src/window.blp:1038
 msgid "Open Folder"
 msgstr "Klasör Aç"
 
@@ -375,11 +377,11 @@ msgstr "Dosya Hatası"
 msgid "Original"
 msgstr "Özgün"
 
-#: src/window.py:1179 src/window.py:1187 src/window.py:1193 src/window.blp:362
+#: src/window.py:1179 src/window.py:1187 src/window.py:1193 src/window.blp:367
 msgid "Aspect Ratio"
 msgstr "En Boy Oranı"
 
-#: src/window.py:1201 src/window.py:1208 src/window.py:1213 src/window.blp:415
+#: src/window.py:1201 src/window.py:1208 src/window.py:1213 src/window.blp:420
 msgid "Rotate"
 msgstr "Döndür"
 
@@ -516,86 +518,86 @@ msgstr "Dosya Döngüsü"
 msgid "Playlist"
 msgstr "Oynatma Listesi"
 
-#: src/window.blp:331
+#: src/window.blp:336
 msgid "Options"
 msgstr "Seçenekler"
 
-#: src/window.blp:352
+#: src/window.blp:357
 msgid "Reset Aspect Ratio"
 msgstr "En Boy Oranını Sıfırla"
 
-#: src/window.blp:385
+#: src/window.blp:390
 msgid "Previous Aspect Ratio"
 msgstr "Önceki En Boy Oranı"
 
-#: src/window.blp:392
+#: src/window.blp:397
 msgid "Next Aspect Ratio"
 msgstr "Sonraki En Boy Oranı"
 
-#: src/window.blp:405
+#: src/window.blp:410
 msgid "Reset Rotation"
 msgstr "Döndürmeyi Sıfırla"
 
-#: src/window.blp:438
+#: src/window.blp:443
 msgid "Rotate Left"
 msgstr "Sola Döndür"
 
-#: src/window.blp:445
+#: src/window.blp:450
 msgid "Rotate Right"
 msgstr "Sağa Döndür"
 
-#: src/window.blp:458
+#: src/window.blp:463
 msgid "Reset Flip"
 msgstr "Çevirmeyi Sıfırla"
 
-#: src/window.blp:468
+#: src/window.blp:473
 msgid "Flip"
 msgstr "Çevir"
 
-#: src/window.blp:491
+#: src/window.blp:496
 msgid "Flip Horizontally"
 msgstr "Yatay Çevir"
 
-#: src/window.blp:498
+#: src/window.blp:503
 msgid "Flip Vertically"
 msgstr "Dikey Çevir"
 
-#: src/window.blp:511
+#: src/window.blp:516
 msgid "Reset Zoom"
 msgstr "Yakınlaştırmayı Sıfırla"
 
-#: src/window.blp:564
+#: src/window.blp:569
 msgid "Reset Contrast"
 msgstr "Karşıtlığı Sıfırla"
 
-#: src/window.blp:617
+#: src/window.blp:622
 msgid "Reset Brightness"
 msgstr "Parlaklığı Sıfırla"
 
-#: src/window.blp:670
+#: src/window.blp:675
 msgid "Reset Gamma"
 msgstr "Gamayı Sıfırla"
 
-#: src/window.blp:723
+#: src/window.blp:728
 msgid "Reset Saturation"
 msgstr "Doygunluğu Sıfırla"
 
-#: src/window.blp:776
+#: src/window.blp:781
 msgid "Reset Subtitle Delay"
 msgstr "Alt Yazı Gecikmesini Sıfırla"
 
-#: src/window.blp:829
+#: src/window.blp:834
 msgid "Reset Audio Delay"
 msgstr "Ses Gecikmesini Sıfırla"
 
-#: src/window.blp:892
+#: src/window.blp:897
 msgid "Playback Speed"
 msgstr "Oynatma Hızı"
 
-#: src/window.blp:1009
+#: src/window.blp:1014
 msgid "Drag and Drop Files Here"
 msgstr "Dosyaları Buraya Sürükleyip Bırak"
 
-#: src/window.blp:1022
+#: src/window.blp:1027
 msgid "Open…"
 msgstr "Aç…"
