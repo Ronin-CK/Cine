@@ -62,7 +62,7 @@ class CineApplication(Adw.Application):
         MPRIS(self)
 
         Adw.Application.do_startup(self)
-        Adw.StyleManager.get_default().props.color_scheme = Adw.ColorScheme.PREFER_DARK
+        Adw.StyleManager.get_default().props.color_scheme = Adw.ColorScheme.FORCE_DARK
 
         self._create_action("new-window", lambda *a: self.activate(), ["<primary>n"])
         self._create_action("quit", lambda *a: self.quit(), ["<primary>q"])
