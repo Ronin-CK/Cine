@@ -21,13 +21,11 @@ import os
 import gi
 import mpv
 import ctypes
-import time
 from typing import cast
 from gettext import gettext as _
 
 from .utils import (
     format_time,
-    ASPECT_RATIOS,
     MBTN_MAP,
     KEY_REMAP,
     SUB_EXTS,
@@ -35,9 +33,11 @@ from .utils import (
     CONFIG_DIR,
     INPUT_CONF,
 )
-from .shortcuts import INTERNAL_BINDINGS, populate_shortcuts_dialog_mpv
-from .preferences import sync_mpv_with_settings
+
+from .options import OptionsMenuButton
 from .playlist import Playlist
+from .preferences import sync_mpv_with_settings
+from .shortcuts import INTERNAL_BINDINGS, populate_shortcuts_dialog_mpv
 
 gi.require_version("Adw", "1")
 gi.require_version("Gio", "2.0")
@@ -89,7 +89,7 @@ class CineWindow(Adw.ApplicationWindow):
     audio_tracks_menu: Gio.Menu = Gtk.Template.Child()
     video_tracks_menu_button: Gtk.MenuButton = Gtk.Template.Child()
     video_tracks_menu: Gio.Menu = Gtk.Template.Child()
-    options_menu_button: Gtk.MenuButton = Gtk.Template.Child()
+    options_menu_button: OptionsMenuButton = Gtk.Template.Child()
     playlist_shuffle_toggle_button: Gtk.ToggleButton = Gtk.Template.Child()
     playlist_loop_toggle_button: Gtk.ToggleButton = Gtk.Template.Child()
     loop_file_toggle_button: Gtk.ToggleButton = Gtk.Template.Child()
@@ -116,7 +116,6 @@ class CineWindow(Adw.ApplicationWindow):
         self.actions: dict[str, Gio.SimpleAction] = {}
         self.prev_motion_xy: tuple = (0, 0)
         self.volume_update_timer_id: int = 0
-        self.aspect_index: int = 0
         self.inhibit_id: int = 0
         self.last_seek_scroll_time: float = 0
 
@@ -1229,213 +1228,3 @@ class CineWindow(Adw.ApplicationWindow):
         @self.mpv.event_callback("shutdown")
         def on_quit(_event):
             GLib.idle_add(self.close)
-
-    # --- RESET VIDEO OPTIONS ---
-    @Gtk.Template.Callback()
-    def _on_reset_all_options(self, _btn):
-        self.mpv.command_async("set", "video-aspect-override", "-1")
-        self.mpv.command_async("set", "video-rotate", 0)
-        self.mpv.command_async("vf", "remove", "@hflip")
-        self.mpv.command_async("vf", "remove", "@vflip")
-        self.mpv.command_async("set", "video-zoom", 0)
-        self.mpv.command_async("set", "contrast", 0)
-        self.mpv.command_async("set", "brightness", 0)
-        self.mpv.command_async("set", "gamma", 0)
-        self.mpv.command_async("set", "saturation", 0)
-        self.mpv.command_async("set", "sub-delay", 0)
-        self.mpv.command_async("set", "audio-delay", 0)
-        self.mpv.command_async("set", "speed", 1.0)
-
-    # --- ASPECT RATIO ---
-    @Gtk.Template.Callback()
-    def _on_aspect_next(self, _btn):
-        self.aspect_index = (self.aspect_index + 1) % len(ASPECT_RATIOS)
-        val = ASPECT_RATIOS[self.aspect_index]
-        self.mpv.command("set", "video-aspect-override", val)
-        label = _("Original") if val == "-1" else val
-        self.mpv.show_text(_("Aspect Ratio") + f": {label}")
-
-    @Gtk.Template.Callback()
-    def _on_aspect_prev(self, _btn):
-        self.aspect_index = (self.aspect_index - 1) % len(ASPECT_RATIOS)
-        val = ASPECT_RATIOS[self.aspect_index]
-        self.mpv.command("set", "video-aspect-override", val)
-        label = _("Original") if val == "-1" else val
-        self.mpv.show_text(_("Aspect Ratio") + f": {label}")
-
-    @Gtk.Template.Callback()
-    def _on_aspect_reset(self, _btn):
-        self.aspect_index = 0
-        self.mpv.command("set", "video-aspect-override", "-1")
-        self.mpv.show_text(_("Aspect Ratio") + ": " + _("Original"))
-
-    # --- ROTATE ---
-    @Gtk.Template.Callback()
-    def _on_rotate_right(self, _btn):
-        curr = cast(int, self.mpv["video-rotate"])
-        new_val = (curr + 90) % 360
-        self.mpv.command("set", "video-rotate", new_val)
-        self.mpv.show_text(_("Rotate") + f": {new_val}°")
-
-    @Gtk.Template.Callback()
-    def _on_rotate_left(self, _btn):
-        curr = cast(int, self.mpv["video-rotate"])
-        new_val = (curr - 90) % 360
-        self.mpv.command("set", "video-rotate", new_val)
-        self.mpv.show_text(_("Rotate") + f": {new_val}°")
-
-    @Gtk.Template.Callback()
-    def _on_rotate_reset(self, _btn):
-        self.mpv.command("set", "video-rotate", 0)
-        self.mpv.show_text(_("Rotate") + f": 0°")
-
-    # --- FLIP ---
-    @Gtk.Template.Callback()
-    def _on_flip_horiz(self, _btn):
-        self.mpv.command("vf", "toggle", "@hflip:hflip")
-        self.mpv.show_text(_("Flip: Horizontal"))
-
-    @Gtk.Template.Callback()
-    def _on_flip_vert(self, _btn):
-        self.mpv.command("vf", "toggle", "@vflip:vflip")
-        self.mpv.show_text(_("Flip: Vertical"))
-
-    @Gtk.Template.Callback()
-    def _on_flip_reset(self, _btn):
-        self.mpv.command("vf", "remove", "@hflip")
-        self.mpv.command("vf", "remove", "@vflip")
-        self.mpv.show_text(_("Flip: Reset"))
-
-    # --- ZOOM ---
-    @Gtk.Template.Callback()
-    def _on_zoom_inc(self, _btn):
-        self.mpv.command("add", "video-zoom", 0.1)
-        val = self.mpv["video-zoom"]
-        self.mpv.show_text(_("Zoom") + f": {val:.1f}x")
-
-    @Gtk.Template.Callback()
-    def _on_zoom_dec(self, _btn):
-        self.mpv.command("add", "video-zoom", -0.1)
-        val = self.mpv["video-zoom"]
-        self.mpv.show_text(_("Zoom") + f": {val:.1f}x")
-
-    @Gtk.Template.Callback()
-    def _on_zoom_reset(self, _btn):
-        self.mpv.command("set", "video-zoom", 0)
-        self.mpv.show_text(_("Zoom") + ": 0x")
-
-    # --- CONTRAST ---
-    @Gtk.Template.Callback()
-    def _on_contrast_inc(self, _btn):
-        self.mpv.command("add", "contrast", 1)
-        self.mpv.show_text(_("Contrast") + f": {self.mpv.contrast}")
-
-    @Gtk.Template.Callback()
-    def _on_contrast_dec(self, _btn):
-        self.mpv.command("add", "contrast", -1)
-        self.mpv.show_text(_("Contrast") + f": {self.mpv.contrast}")
-
-    @Gtk.Template.Callback()
-    def _on_contrast_reset(self, _btn):
-        self.mpv.command("set", "contrast", 0)
-        self.mpv.show_text(_("Contrast") + ": 0")
-
-    # --- BRIGHTNESS ---
-    @Gtk.Template.Callback()
-    def _on_brightness_inc(self, _btn):
-        self.mpv.command("add", "brightness", 1)
-        self.mpv.show_text(_("Brightness") + f": {self.mpv.brightness}")
-
-    @Gtk.Template.Callback()
-    def _on_brightness_dec(self, _btn):
-        self.mpv.command("add", "brightness", -1)
-        self.mpv.show_text(_("Brightness") + f": {self.mpv.brightness}")
-
-    @Gtk.Template.Callback()
-    def _on_brightness_reset(self, _btn):
-        self.mpv.command("set", "brightness", 0)
-        self.mpv.show_text(_("Brightness") + ": 0")
-
-    # --- GAMMA ---
-    @Gtk.Template.Callback()
-    def _on_gamma_inc(self, _btn):
-        self.mpv.command("add", "gamma", 1)
-        self.mpv.show_text(_("Gamma") + f": {self.mpv.gamma}")
-
-    @Gtk.Template.Callback()
-    def _on_gamma_dec(self, _btn):
-        self.mpv.command("add", "gamma", -1)
-        self.mpv.show_text(_("Gamma") + f": {self.mpv.gamma}")
-
-    @Gtk.Template.Callback()
-    def _on_gamma_reset(self, _btn):
-        self.mpv.command("set", "gamma", 0)
-        self.mpv.show_text(_("Gamma") + ": 0")
-
-    # --- SATURATION ---
-    @Gtk.Template.Callback()
-    def _on_saturation_inc(self, _btn):
-        self.mpv.command("add", "saturation", 1)
-        self.mpv.show_text(_("Saturation") + f": {self.mpv.saturation}")
-
-    @Gtk.Template.Callback()
-    def _on_saturation_dec(self, _btn):
-        self.mpv.command("add", "saturation", -1)
-        self.mpv.show_text(_("Saturation") + f": {self.mpv.saturation}")
-
-    @Gtk.Template.Callback()
-    def _on_saturation_reset(self, _btn):
-        self.mpv.command("set", "saturation", 0)
-        self.mpv.show_text(_("Saturation") + ": 0")
-
-    # --- SUBTITLE DELAY ---
-    @Gtk.Template.Callback()
-    def _on_sub_delay_up(self, _btn):
-        self.mpv.command("add", "sub-delay", 0.1)
-        val = cast(float, self.mpv["sub-delay"])
-        self.mpv.show_text(_("Subtitle Delay") + f": {round(val * 1000)} ms")
-
-    @Gtk.Template.Callback()
-    def _on_sub_delay_down(self, _btn):
-        self.mpv.command("add", "sub-delay", -0.1)
-        val = cast(float, self.mpv["sub-delay"])
-        self.mpv.show_text(_("Subtitle Delay") + f": {round(val * 1000)} ms")
-
-    @Gtk.Template.Callback()
-    def _on_sub_delay_reset(self, _btn):
-        self.mpv.command("set", "sub-delay", 0)
-        self.mpv.show_text(_("Subtitle Delay") + ": 0ms")
-
-    # --- AUDIO DELAY ---
-    @Gtk.Template.Callback()
-    def _on_audio_delay_up(self, _btn):
-        self.mpv.command("add", "audio-delay", 0.1)
-        val = cast(float, self.mpv["audio-delay"])
-        self.mpv.show_text(_("Audio Delay") + f": {round(val * 1000)} ms")
-
-    @Gtk.Template.Callback()
-    def _on_audio_delay_down(self, _btn):
-        self.mpv.command("add", "audio-delay", -0.1)
-        val = cast(float, self.mpv["audio-delay"])
-        self.mpv.show_text(_("Audio Delay") + f": {round(val * 1000)} ms")
-
-    @Gtk.Template.Callback()
-    def _on_audio_delay_reset(self, _btn):
-        self.mpv.command("set", "audio-delay", 0)
-        self.mpv.show_text(_("Audio Delay") + f": 0ms")
-
-    # --- PLAYBACK SPEED ---
-    @Gtk.Template.Callback()
-    def _on_speed_inc(self, _btn):
-        self.mpv.command("add", "speed", 0.1)
-        self.mpv.show_text(_("Speed") + f": {self.mpv.speed:.1f}x")
-
-    @Gtk.Template.Callback()
-    def _on_speed_dec(self, _btn):
-        self.mpv.command("add", "speed", -0.1)
-        self.mpv.show_text(_("Speed") + f": {self.mpv.speed:.1f}x")
-
-    @Gtk.Template.Callback()
-    def _on_speed_reset(self, _btn):
-        self.mpv.command("set", "speed", 1.0)
-        self.mpv.show_text(_("Speed") + f": 1.0x")

@@ -1,0 +1,620 @@
+using Gtk 4.0;
+
+template $OptionsMenuButton: MenuButton {
+  styles [
+    "circular",
+    "flat",
+  ]
+
+  direction: up;
+  halign: center;
+  icon-name: "emblem-system-symbolic";
+  tooltip-text: _("Options");
+
+  popover: Popover {
+    styles [
+      "popover-scrolled",
+    ]
+
+    ScrolledWindow {
+      propagate-natural-height: true;
+      propagate-natural-width: true;
+
+      Box {
+        orientation: vertical;
+        spacing: 8;
+
+        Box {
+          Button {
+            hexpand: true;
+            label: _("Reset All");
+            clicked => $_on_reset_all_options();
+          }
+        }
+
+        // --- ASPECT RATIO ---
+        Box {
+          Box {
+            halign: start;
+
+            Button {
+              icon-name: "edit-undo-symbolic";
+              tooltip-text: _("Reset Aspect Ratio");
+
+              styles [
+                "flat",
+              ]
+
+              clicked => $_on_aspect_reset();
+            }
+
+            Label {
+              label: _("Aspect Ratio");
+              halign: start;
+              margin-start: 8;
+
+              styles [
+                "heading",
+              ]
+            }
+          }
+
+          Separator {
+            hexpand: true;
+            opacity: 0;
+            margin-end: 16;
+          }
+
+          Box {
+            halign: end;
+            spacing: 8;
+
+            Button {
+              width-request: 50;
+              icon-name: "go-previous-symbolic";
+              tooltip-text: _("Previous Aspect Ratio");
+              clicked => $_on_aspect_prev();
+            }
+
+            Button {
+              width-request: 50;
+              icon-name: "go-next-symbolic";
+              tooltip-text: _("Next Aspect Ratio");
+              clicked => $_on_aspect_next();
+            }
+          }
+        }
+
+        // --- ROTATE ---
+        Box {
+          Box {
+            halign: start;
+
+            Button {
+              icon-name: "edit-undo-symbolic";
+              tooltip-text: _("Reset Rotation");
+
+              styles [
+                "flat",
+              ]
+
+              clicked => $_on_rotate_reset();
+            }
+
+            Label {
+              label: _("Rotate");
+              halign: start;
+              margin-start: 8;
+
+              styles [
+                "heading",
+              ]
+            }
+          }
+
+          Separator {
+            hexpand: true;
+            opacity: 0;
+            margin-end: 16;
+          }
+
+          Box {
+            halign: end;
+            spacing: 8;
+
+            Button {
+              width-request: 50;
+              icon-name: "object-rotate-left-symbolic";
+              tooltip-text: _("Rotate Left");
+              clicked => $_on_rotate_left();
+            }
+
+            Button {
+              width-request: 50;
+              icon-name: "object-rotate-right-symbolic";
+              tooltip-text: _("Rotate Right");
+              clicked => $_on_rotate_right();
+            }
+          }
+        }
+
+        // --- FLIP ---
+        Box {
+          Box {
+            halign: start;
+
+            Button {
+              icon-name: "edit-undo-symbolic";
+              tooltip-text: _("Reset Flip");
+
+              styles [
+                "flat",
+              ]
+
+              clicked => $_on_flip_reset();
+            }
+
+            Label {
+              label: _("Flip");
+              halign: start;
+              margin-start: 8;
+
+              styles [
+                "heading",
+              ]
+            }
+          }
+
+          Separator {
+            hexpand: true;
+            opacity: 0;
+            margin-end: 16;
+          }
+
+          Box {
+            halign: end;
+            spacing: 8;
+
+            Button {
+              width-request: 50;
+              icon-name: "object-flip-horizontal-symbolic";
+              tooltip-text: _("Flip Horizontally");
+              clicked => $_on_flip_horiz();
+            }
+
+            Button {
+              width-request: 50;
+              icon-name: "object-flip-vertical-symbolic";
+              tooltip-text: _("Flip Vertically");
+              clicked => $_on_flip_vert();
+            }
+          }
+        }
+
+        // --- ZOOM ---
+        Box {
+          Box {
+            halign: start;
+
+            Button {
+              icon-name: "edit-undo-symbolic";
+              tooltip-text: _("Reset Zoom");
+
+              styles [
+                "flat",
+              ]
+
+              clicked => $_on_zoom_reset();
+            }
+
+            Label {
+              label: _("Zoom");
+              halign: start;
+              margin-start: 8;
+
+              styles [
+                "heading",
+              ]
+            }
+          }
+
+          Separator {
+            hexpand: true;
+            opacity: 0;
+            margin-end: 16;
+          }
+
+          Box {
+            halign: end;
+            spacing: 8;
+
+            Button {
+              width-request: 50;
+              icon-name: "value-decrease-symbolic";
+              tooltip-text: _("Zoom Out");
+              clicked => $_on_zoom_dec();
+            }
+
+            Button {
+              width-request: 50;
+              icon-name: "value-increase-symbolic";
+              tooltip-text: _("Zoom In");
+              clicked => $_on_zoom_inc();
+            }
+          }
+        }
+
+        // --- CONTRAST ---
+        Box {
+          Box {
+            halign: start;
+
+            Button {
+              icon-name: "edit-undo-symbolic";
+              tooltip-text: _("Reset Contrast");
+
+              styles [
+                "flat",
+              ]
+
+              clicked => $_on_contrast_reset();
+            }
+
+            Label {
+              label: _("Contrast");
+              halign: start;
+              margin-start: 8;
+
+              styles [
+                "heading",
+              ]
+            }
+          }
+
+          Separator {
+            hexpand: true;
+            opacity: 0;
+            margin-end: 16;
+          }
+
+          Box {
+            halign: end;
+            spacing: 8;
+
+            Button {
+              width-request: 50;
+              icon-name: "value-decrease-symbolic";
+              tooltip-text: _("Decrease Contrast");
+              clicked => $_on_contrast_dec();
+            }
+
+            Button {
+              width-request: 50;
+              icon-name: "value-increase-symbolic";
+              tooltip-text: _("Increase Contrast");
+              clicked => $_on_contrast_inc();
+            }
+          }
+        }
+
+        // --- BRIGHTNESS ---
+        Box {
+          Box {
+            halign: start;
+
+            Button {
+              icon-name: "edit-undo-symbolic";
+              tooltip-text: _("Reset Brightness");
+
+              styles [
+                "flat",
+              ]
+
+              clicked => $_on_brightness_reset();
+            }
+
+            Label {
+              label: _("Brightness");
+              halign: start;
+              margin-start: 8;
+
+              styles [
+                "heading",
+              ]
+            }
+          }
+
+          Separator {
+            hexpand: true;
+            opacity: 0;
+            margin-end: 16;
+          }
+
+          Box {
+            halign: end;
+            spacing: 8;
+
+            Button {
+              width-request: 50;
+              icon-name: "value-decrease-symbolic";
+              tooltip-text: _("Decrease Brightness");
+              clicked => $_on_brightness_dec();
+            }
+
+            Button {
+              width-request: 50;
+              icon-name: "value-increase-symbolic";
+              tooltip-text: _("Increase Brightness");
+              clicked => $_on_brightness_inc();
+            }
+          }
+        }
+
+        // --- GAMMA ---
+        Box {
+          Box {
+            halign: start;
+
+            Button {
+              icon-name: "edit-undo-symbolic";
+              tooltip-text: _("Reset Gamma");
+
+              styles [
+                "flat",
+              ]
+
+              clicked => $_on_gamma_reset();
+            }
+
+            Label {
+              label: _("Gamma");
+              halign: start;
+              margin-start: 8;
+
+              styles [
+                "heading",
+              ]
+            }
+          }
+
+          Separator {
+            hexpand: true;
+            opacity: 0;
+            margin-end: 16;
+          }
+
+          Box {
+            halign: end;
+            spacing: 8;
+
+            Button {
+              width-request: 50;
+              icon-name: "value-decrease-symbolic";
+              tooltip-text: _("Decrease Gamma");
+              clicked => $_on_gamma_dec();
+            }
+
+            Button {
+              width-request: 50;
+              icon-name: "value-increase-symbolic";
+              tooltip-text: _("Increase Gamma");
+              clicked => $_on_gamma_inc();
+            }
+          }
+        }
+
+        // --- SATURATION ---
+        Box {
+          Box {
+            halign: start;
+
+            Button {
+              icon-name: "edit-undo-symbolic";
+              tooltip-text: _("Reset Saturation");
+
+              styles [
+                "flat",
+              ]
+
+              clicked => $_on_saturation_reset();
+            }
+
+            Label {
+              label: _("Saturation");
+              halign: start;
+              margin-start: 8;
+
+              styles [
+                "heading",
+              ]
+            }
+          }
+
+          Separator {
+            hexpand: true;
+            opacity: 0;
+            margin-end: 16;
+          }
+
+          Box {
+            halign: end;
+            spacing: 8;
+
+            Button {
+              width-request: 50;
+              icon-name: "value-decrease-symbolic";
+              tooltip-text: _("Decrease Saturation");
+              clicked => $_on_saturation_dec();
+            }
+
+            Button {
+              width-request: 50;
+              icon-name: "value-increase-symbolic";
+              tooltip-text: _("Increase Saturation");
+              clicked => $_on_saturation_inc();
+            }
+          }
+        }
+
+        // --- SUBTITLE DELAY ---
+        Box {
+          Box {
+            halign: start;
+
+            Button {
+              icon-name: "edit-undo-symbolic";
+              tooltip-text: _("Reset Subtitle Delay");
+
+              styles [
+                "flat",
+              ]
+
+              clicked => $_on_sub_delay_reset();
+            }
+
+            Label {
+              label: _("Subtitle Delay");
+              halign: start;
+              margin-start: 8;
+
+              styles [
+                "heading",
+              ]
+            }
+          }
+
+          Separator {
+            hexpand: true;
+            opacity: 0;
+            margin-end: 16;
+          }
+
+          Box {
+            halign: end;
+            spacing: 8;
+
+            Button {
+              width-request: 50;
+              icon-name: "value-decrease-symbolic";
+              tooltip-text: _("Decrease Subtitle Delay");
+              clicked => $_on_sub_delay_down();
+            }
+
+            Button {
+              width-request: 50;
+              icon-name: "value-increase-symbolic";
+              tooltip-text: _("Increase Subtitle Delay");
+              clicked => $_on_sub_delay_up();
+            }
+          }
+        }
+
+        // --- AUDIO DELAY ---
+        Box {
+          Box {
+            halign: start;
+
+            Button {
+              icon-name: "edit-undo-symbolic";
+              tooltip-text: _("Reset Audio Delay");
+
+              styles [
+                "flat",
+              ]
+
+              clicked => $_on_audio_delay_reset();
+            }
+
+            Label {
+              label: _("Audio Delay");
+              halign: start;
+              margin-start: 8;
+
+              styles [
+                "heading",
+              ]
+            }
+          }
+
+          Separator {
+            hexpand: true;
+            opacity: 0;
+            margin-end: 16;
+          }
+
+          Box {
+            halign: end;
+            spacing: 8;
+
+            Button {
+              width-request: 50;
+              icon-name: "value-decrease-symbolic";
+              tooltip-text: _("Decrease Audio Delay");
+              clicked => $_on_audio_delay_down();
+            }
+
+            Button {
+              width-request: 50;
+              icon-name: "value-increase-symbolic";
+              tooltip-text: _("Increase Audio Delay");
+              clicked => $_on_audio_delay_up();
+            }
+          }
+        }
+
+        // --- PLAYBACK SPEED ---
+        Box {
+          Box {
+            halign: start;
+
+            Button {
+              icon-name: "edit-undo-symbolic";
+              tooltip-text: _("Reset Playback Speed");
+
+              styles [
+                "flat",
+              ]
+
+              clicked => $_on_speed_reset();
+            }
+
+            Label {
+              label: _("Playback Speed");
+              halign: start;
+              margin-start: 8;
+
+              styles [
+                "heading",
+              ]
+            }
+          }
+
+          Separator {
+            hexpand: true;
+            opacity: 0;
+            margin-end: 16;
+          }
+
+          Box {
+            halign: end;
+            spacing: 8;
+
+            Button {
+              width-request: 50;
+              icon-name: "value-decrease-symbolic";
+              tooltip-text: _("Increase Playback Speed");
+              clicked => $_on_speed_dec();
+            }
+
+            Button {
+              width-request: 50;
+              icon-name: "value-increase-symbolic";
+              tooltip-text: _("Decrease Playback Speed");
+              clicked => $_on_speed_inc();
+            }
+          }
+        }
+      }
+    }
+  };
+}
