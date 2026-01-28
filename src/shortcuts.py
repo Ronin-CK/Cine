@@ -47,11 +47,11 @@ MBTN_BACK      playlist-prev;
 MBTN_FORWARD   playlist-next; 
 WHEEL_LEFT     seek -10
 WHEEL_RIGHT    seek 10
-=              add video-zoom 0.1; show-text "{_("Zoom")}: ${{video-zoom}}x" #{_("Zoom In")}
-+              add video-zoom 0.1; show-text "{_("Zoom")}: ${{video-zoom}}x" #{_("Zoom In")}
-ZOOMIN         add video-zoom 0.1; show-text "{_("Zoom")}: ${{video-zoom}}x" #{_("Zoom In")}
--              add video-zoom -0.1; show-text "{_("Zoom")}: ${{video-zoom}}x" #{_("Zoom Out")}
-ZOOMOUT        add video-zoom -0.1; show-text "{_("Zoom")}: ${{video-zoom}}x" #{_("Zoom Out")}
+=              add video-zoom 0.1; show-text "{_("Zoom")}: ${{video-zoom}}" #{_("Zoom In")}
++              add video-zoom 0.1; show-text "{_("Zoom")}: ${{video-zoom}}" #{_("Zoom In")}
+ZOOMIN         add video-zoom 0.1; show-text "{_("Zoom")}: ${{video-zoom}}" #{_("Zoom In")}
+-              add video-zoom -0.1; show-text "{_("Zoom")}: ${{video-zoom}}" #{_("Zoom Out")}
+ZOOMOUT        add video-zoom -0.1; show-text "{_("Zoom")}: ${{video-zoom}}" #{_("Zoom Out")}
 ,              add sub-delay -0.1; show-text "{_("Subtitle Delay")}: ${{sub-delay}}" #{_("Decrease Subtitle Delay")}
 .              add sub-delay +0.1; show-text "{_("Subtitle Delay")}: ${{sub-delay}}" #{_("Increase Subtitle Delay")}
 PGUP           add sub-pos -1; show-text "{_("Subtitle Position")}: ${{sub-pos}}" #{_("Move Subtitles Up")}
