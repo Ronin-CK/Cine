@@ -46,7 +46,13 @@ gi.require_version("Gio", "2.0")
 gi.require_version("Gdk", "4.0")
 gi.require_version("GLib", "2.0")
 gi.require_version("Gtk", "4.0")
+gi.require_version("GdkWayland", "4.0")
+gi.require_version("GdkX11", "4.0")
 from gi.repository import Adw, Gio, Gdk, GLib, Gtk
+from gi.repository import (
+    GdkWayland,  # pyright: ignore[reportAttributeAccessIssue]
+    GdkX11,
+)
 
 libegl = ctypes.CDLL("libEGL.so.1")
 egl_get_proc_address = libegl.eglGetProcAddress
@@ -1022,19 +1028,21 @@ class CineWindow(Adw.ApplicationWindow):
         display = Gdk.Display.get_default()
         param = {}
 
-        if display:
-            if "wayland" in display.get_name():
+        try:
+            if isinstance(display, GdkWayland.WaylandDisplay):
                 gdk_c.gdk_wayland_display_get_wl_display.restype = ctypes.c_void_p
                 gdk_c.gdk_wayland_display_get_wl_display.argtypes = [ctypes.c_void_p]
                 ptr = gdk_c.gdk_wayland_display_get_wl_display(hash(display))
                 if ptr:
                     param["wl_display"] = ptr
-            else:
+            elif isinstance(display, GdkX11.X11Display):
                 gdk_c.gdk_x11_display_get_x11_display.restype = ctypes.c_void_p
                 gdk_c.gdk_x11_display_get_x11_display.argtypes = [ctypes.c_void_p]
                 ptr = gdk_c.gdk_x11_display_get_x11_display(hash(display))
                 if ptr:
                     param["x11_display"] = ptr
+        except Exception as e:
+            print(f"Error getting display param: {e}")
 
         return param
 
