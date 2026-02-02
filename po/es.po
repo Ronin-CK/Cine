@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-01 20:35-0300\n"
-"PO-Revision-Date: 2026-01-26 08:45-0300\n"
+"POT-Creation-Date: 2026-02-02 10:46-0300\n"
+"PO-Revision-Date: 2026-02-02 08:45-0300\n"
 "Last-Translator: Diego Povliuk <diegopvlk@gmail.com>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:210 src/mpris.py:146
-#: src/mpris.py:364 src/window.py:139 src/window.py:235 src/window.py:1271
+#: src/mpris.py:364 src/window.py:139 src/window.py:235 src/window.py:1276
 #: src/window.blp:6
 msgid "Cine"
 msgstr "Cine"
@@ -102,7 +102,7 @@ msgstr "Título desconocido"
 msgid "Original"
 msgstr "Original"
 
-#: src/playlist.py:47 src/window.py:873 src/window.py:1152
+#: src/playlist.py:47 src/window.py:876 src/window.py:1155
 msgid "File Error"
 msgstr "Error de Archivo"
 
@@ -110,7 +110,7 @@ msgstr "Error de Archivo"
 msgid "Add Files"
 msgstr "Añadir Archivos"
 
-#: src/shortcuts.py:29 src/shortcuts.py:30 src/window.py:1201
+#: src/shortcuts.py:29 src/shortcuts.py:30 src/window.py:1206
 #: src/window.blp:197
 msgid "Volume"
 msgstr "Volumen"
@@ -128,7 +128,7 @@ msgstr "Bajar Volumen"
 msgid "Play/Pause"
 msgstr "Reproducir/Pausar"
 
-#: src/shortcuts.py:36 src/shortcuts.py:177 src/window.blp:239
+#: src/shortcuts.py:36 src/shortcuts.py:199 src/window.blp:239
 msgid "Subtitles"
 msgstr "Subtítulos"
 
@@ -152,7 +152,8 @@ msgstr "Retroceder 5s"
 msgid "Seek 5s Forward"
 msgstr "Adelantar 5s"
 
-#: src/shortcuts.py:41 src/shortcuts.py:42 src/window.blp:332
+#: src/shortcuts.py:41 src/shortcuts.py:42 src/window.py:1185
+#: src/window.blp:332
 msgid "Fullscreen"
 msgstr "Pantalla Completa"
 
@@ -324,15 +325,15 @@ msgstr "Aumentar la Velocidad de Reproducción"
 msgid "Reset Playback Speed"
 msgstr "Restablecer Velocidad"
 
-#: src/shortcuts.py:179
-msgid "Audio & Volume"
-msgstr "Audio y Volumen"
-
-#: src/shortcuts.py:198
+#: src/shortcuts.py:183
 msgid "Display & Video"
 msgstr "Pantalla y Vídeo"
 
 #: src/shortcuts.py:200
+msgid "Audio & Volume"
+msgstr "Audio y Volumen"
+
+#: src/shortcuts.py:201
 msgid "Navigation"
 msgstr "Navegación"
 
@@ -340,11 +341,11 @@ msgstr "Navegación"
 msgid "Playback"
 msgstr "Reproducción"
 
-#: src/shortcuts.py:203
+#: src/shortcuts.py:206 src/shortcuts.py:212
 msgid "Miscellaneous"
 msgstr "Miscelánea"
 
-#: src/window.py:434 src/window.py:866 src/window.blp:96
+#: src/window.py:434 src/window.py:869 src/window.blp:96
 msgid "Add Subtitle Track"
 msgstr "Añadir Pista de Subtítulos"
 
@@ -389,9 +390,21 @@ msgstr "Audio"
 msgid "Media"
 msgstr "Medio"
 
-#: src/window.py:870 src/window.py:887 src/playlist.blp:78
+#: src/window.py:773
+msgid "Pause"
+msgstr "Pausar"
+
+#: src/window.py:773
+msgid "Play"
+msgstr "Reproducir"
+
+#: src/window.py:873 src/window.py:890 src/playlist.blp:78
 msgid "Add to Playlist"
 msgstr "Añadir a la Lista de Reproducción"
+
+#: src/window.py:1185
+msgid "Exit Fullscreen"
+msgstr "Salir de pantalla completa"
 
 #: src/options.blp:14
 msgid "Options"

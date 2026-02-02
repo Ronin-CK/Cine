@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-01 20:41-0300\n"
-"PO-Revision-Date: 2026-02-01 23:45+0200\n"
+"POT-Creation-Date: 2026-02-02 10:46-0300\n"
+"PO-Revision-Date: 2026-02-02 08:45-0300\n"
 "Last-Translator: Muhammed Al-Basha <contact.mu7basha@gmail.com>\n"
 "Language-Team: Arabic\n"
 "Language: ar\n"
@@ -21,7 +21,7 @@ msgstr ""
 "X-Generator: Gtranslator 49.0\n"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:210 src/mpris.py:146
-#: src/mpris.py:364 src/window.py:139 src/window.py:235 src/window.py:1271
+#: src/mpris.py:364 src/window.py:139 src/window.py:235 src/window.py:1276
 #: src/window.blp:6
 msgid "Cine"
 msgstr "سيني"
@@ -56,8 +56,7 @@ msgstr "تصميم بسيط: واجهة موحَّدة، بلا ازعاج"
 msgid ""
 "MPV-Based: Leverages the robust power of MPV for great playback and format "
 "support"
-msgstr ""
-"MPV كأساس: مستغلًا قوة MPV لتجربة تشغيل رائعة ودعم جيد للصيغة"
+msgstr "MPV كأساس: مستغلًا قوة MPV لتجربة تشغيل رائعة ودعم جيد للصيغة"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:29
 msgid ""
@@ -100,7 +99,7 @@ msgstr "عنوان مجهول"
 msgid "Original"
 msgstr "الأصلي"
 
-#: src/playlist.py:47 src/window.py:873 src/window.py:1152
+#: src/playlist.py:47 src/window.py:876 src/window.py:1155
 msgid "File Error"
 msgstr "خطأ في الملف"
 
@@ -108,7 +107,7 @@ msgstr "خطأ في الملف"
 msgid "Add Files"
 msgstr "اضف ملفات"
 
-#: src/shortcuts.py:29 src/shortcuts.py:30 src/window.py:1201
+#: src/shortcuts.py:29 src/shortcuts.py:30 src/window.py:1206
 #: src/window.blp:197
 msgid "Volume"
 msgstr "مستوى الصوت"
@@ -126,7 +125,7 @@ msgstr "اخفض متسوى الصوت"
 msgid "Play/Pause"
 msgstr "تشغيل/ايقاف"
 
-#: src/shortcuts.py:36 src/shortcuts.py:177 src/window.blp:239
+#: src/shortcuts.py:36 src/shortcuts.py:199 src/window.blp:239
 msgid "Subtitles"
 msgstr "الترجمات"
 
@@ -150,7 +149,8 @@ msgstr "اسعي ٥ث للوراء"
 msgid "Seek 5s Forward"
 msgstr "اسعي ٥ث للأمام"
 
-#: src/shortcuts.py:41 src/shortcuts.py:42 src/window.blp:332
+#: src/shortcuts.py:41 src/shortcuts.py:42 src/window.py:1185
+#: src/window.blp:332
 msgid "Fullscreen"
 msgstr "ملء الشاشة"
 
@@ -322,15 +322,15 @@ msgstr "زِد سرعة التشغيل"
 msgid "Reset Playback Speed"
 msgstr "صفّر سرعة التشغيل"
 
-#: src/shortcuts.py:179
-msgid "Audio & Volume"
-msgstr "الصوت ومستواه"
-
-#: src/shortcuts.py:198
+#: src/shortcuts.py:183
 msgid "Display & Video"
 msgstr "العرض والفيديو"
 
 #: src/shortcuts.py:200
+msgid "Audio & Volume"
+msgstr "الصوت ومستواه"
+
+#: src/shortcuts.py:201
 msgid "Navigation"
 msgstr "التنقل"
 
@@ -338,11 +338,11 @@ msgstr "التنقل"
 msgid "Playback"
 msgstr "التشغيل"
 
-#: src/shortcuts.py:203
+#: src/shortcuts.py:206 src/shortcuts.py:212
 msgid "Miscellaneous"
 msgstr "المتنوعات"
 
-#: src/window.py:434 src/window.py:866 src/window.blp:96
+#: src/window.py:434 src/window.py:869 src/window.blp:96
 msgid "Add Subtitle Track"
 msgstr "اضف ملف ترجمة"
 
@@ -387,9 +387,21 @@ msgstr "صوت"
 msgid "Media"
 msgstr "وسائط"
 
-#: src/window.py:870 src/window.py:887 src/playlist.blp:78
+#: src/window.py:773
+msgid "Pause"
+msgstr "ألبِث"
+
+#: src/window.py:773
+msgid "Play"
+msgstr "شغِّل"
+
+#: src/window.py:873 src/window.py:890 src/playlist.blp:78
 msgid "Add to Playlist"
 msgstr "اضف لقائمة التشغيل"
+
+#: src/window.py:1185
+msgid "Exit Fullscreen"
+msgstr "اُخرج من ملء الشاشة"
 
 #: src/options.blp:14
 msgid "Options"
