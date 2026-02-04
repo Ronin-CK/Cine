@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-03 21:52-0300\n"
-"PO-Revision-Date: 2026-02-02 08:45-0300\n"
-"Last-Translator: Mimolet <theMimolet@proton.me>\n"
-"Language-Team: French\n"
+"PO-Revision-Date: 2026-02-04 00:57+0000\n"
+"Last-Translator: Diego Povliuk <diego.pvlk@gmail.com>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/cine/cine/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Gtranslator 49.0\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:210 src/mpris.py:146
 #: src/mpris.py:364 src/window.py:147 src/window.py:243 src/window.py:1292
@@ -32,7 +32,8 @@ msgstr "Visionnez vos vidéos"
 #. TRANSLATORS: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/io.github.diegopvlk.Cine.desktop.in:10
 msgid "Audio;Video;Movie;TV;Film;Clip;Player;Cine;mpv;"
-msgstr "Audio;Video;Movie;TV;Film;Clip;Player;Cine;mpv;Vidéo;Lecteur;Media;"
+msgstr ""
+"Audio ;Video ;Movie ;TV ;Film ;Clip ;Player ;Cine ;mpv ;Vidéo ;Lecteur ;Media ;"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:18 src/shortcuts-dialog.blp:11
 #: src/window.blp:117
