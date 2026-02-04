@@ -71,6 +71,14 @@
   </requires>
 
   <releases>
+    <release version="1.0.5" date="2026-02-04">
+      <description translate="no">
+        <ul>
+          <li>Fixed NVIDIA video flickering</li>
+          <li>Default drop action is now "Play". To "Add to Playlist", drop directly into Playlist view</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.0.4" date="2026-02-02">
       <description translate="no">
         <ul>
