@@ -1307,6 +1307,29 @@ class CineWindow(Adw.ApplicationWindow):
 
             GLib.idle_add(update)
 
+        @self.mpv.property_observer("sub-visibility")
+        @self.mpv.property_observer("sid")
+        def on_sub_vis_change(_name, value):
+            def set_icon():
+                sub_on = (value == "auto" or value) and self.mpv.sid
+                self.subtitles_menu_button.props.icon_name = (
+                    "cine-subtitles-symbolic"
+                    if sub_on
+                    else "cine-subtitles-off-symbolic"
+                )
+
+            GLib.idle_add(set_icon)
+
+        @self.mpv.property_observer("aid")
+        def on_aid_change(_name, value):
+            def set_icon():
+                audio_on = value == "auto" or value
+                self.audio_tracks_menu_button.props.icon_name = (
+                    "cine-audio-symbolic" if audio_on else "cine-audio-off-symbolic"
+                )
+
+            GLib.idle_add(set_icon)
+
         @self.mpv.event_callback("shutdown")
         def on_quit(_event):
             GLib.idle_add(self.close)

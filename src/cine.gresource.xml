@@ -9,6 +9,7 @@
     <file preprocess="xml-stripblanks">shortcuts-dialog.ui</file>
   </gresource>
   <gresource prefix="/io/github/diegopvlk/Cine/icons/scalable/actions">
+    <file alias="cine-audio-off-symbolic.svg">../data/icons/scalable/actions/cine-audio-off-symbolic.svg</file>
     <file alias="cine-audio-symbolic.svg">../data/icons/scalable/actions/cine-audio-symbolic.svg</file>
     <file alias="cine-list-add-symbolic.svg">../data/icons/scalable/actions/cine-list-add-symbolic.svg</file>
     <file alias="cine-options-symbolic.svg">../data/icons/scalable/actions/cine-options-symbolic.svg</file>
@@ -33,6 +34,7 @@
     <file alias="cine-volume-low-symbolic.svg">../data/icons/scalable/actions/cine-volume-low-symbolic.svg</file>
     <file alias="cine-volume-overamp-symbolic-rtl.svg">../data/icons/scalable/actions/cine-volume-overamp-symbolic-rtl.svg</file>
     <file alias="cine-volume-overamp-symbolic.svg">../data/icons/scalable/actions/cine-volume-overamp-symbolic.svg</file>
+    <file alias="cine-subtitles-off-symbolic.svg">../data/icons/scalable/actions/cine-subtitles-off-symbolic.svg</file>
     <file alias="cine-subtitles-symbolic.svg">../data/icons/scalable/actions/cine-subtitles-symbolic.svg</file>
     <file alias="cine-video-symbolic.svg">../data/icons/scalable/actions/cine-video-symbolic.svg</file>
     <file alias="cine-view-fullscreen-symbolic.svg">../data/icons/scalable/actions/cine-view-fullscreen-symbolic.svg</file>
