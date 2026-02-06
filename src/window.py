@@ -137,6 +137,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.volume_update_timer_id: int = 0
         self.inhibit_id: int = 0
         self.last_seek_scroll_time: float = 0
+        self.loaded_path: str
 
         self.mpv_ctx: mpv.MpvRenderContext
 
@@ -882,6 +883,7 @@ class CineWindow(Adw.ApplicationWindow):
                 self.drop_label.props.label = _("Play")
 
             except GLib.Error as e:
+                print(f"File error path: {self.loaded_path}")
                 toast = Adw.Toast.new(_("File Error") + f": {e.message}")
                 self.toast_overlay.add_toast(toast)
                 self.spinner.set_visible(False)
@@ -1155,6 +1157,7 @@ class CineWindow(Adw.ApplicationWindow):
         @self.mpv.event_callback("start-file")
         def on_start_file(event):
             GLib.idle_add(self.spinner.set_visible, True)
+            self.loaded_path = str(self.mpv.path)
 
         @self.mpv.event_callback("file-loaded")
         def on_files_loaded(event):
@@ -1166,6 +1169,7 @@ class CineWindow(Adw.ApplicationWindow):
             info = event.as_dict()
             reason = info["reason"]
             if reason == b"error":
+                print(f"File error path: {self.loaded_path}")
                 error = info["file_error"]
                 toast = Adw.Toast.new(_("File Error") + f": {error.decode('utf-8')}")
                 self.toast_overlay.add_toast(toast)
