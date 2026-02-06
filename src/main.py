@@ -212,6 +212,7 @@ class CineApplication(Adw.Application):
             developer_name="Diego Povliuk",
             version=APP_VERSION,
             copyright="© 2026 Diego Povliuk",
+            issue_url="https://github.com/diegopvlk/Cine/issues",
             license_type=Gtk.License.GPL_3_0,
         )
         try:
