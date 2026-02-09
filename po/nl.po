@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-06 08:53-0300\n"
+"POT-Creation-Date: 2026-02-09 19:56-0300\n"
 "PO-Revision-Date: 2026-02-06 11:15+0100\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: \n"
@@ -103,11 +103,11 @@ msgstr "Onbekend"
 msgid "Original"
 msgstr "Origineel"
 
-#: src/playlist.py:48 src/window.py:887 src/window.py:1174
+#: src/playlist.py:47 src/window.py:887 src/window.py:1174
 msgid "File Error"
 msgstr "Bestandsfout"
 
-#: src/playlist.py:146 src/window.py:562 src/playlist.blp:23 src/window.blp:91
+#: src/playlist.py:160 src/window.py:562 src/playlist.blp:23 src/window.blp:91
 msgid "Add Files"
 msgstr "Bestanden toevoegen"
 

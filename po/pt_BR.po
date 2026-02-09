@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-06 08:53-0300\n"
+"POT-Creation-Date: 2026-02-09 19:56-0300\n"
 "PO-Revision-Date: 2026-02-02 08:45-0300\n"
 "Last-Translator: Diego Povliuk <diegopvlk@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -101,11 +101,11 @@ msgstr "Título desconhecido"
 msgid "Original"
 msgstr "Original"
 
-#: src/playlist.py:48 src/window.py:887 src/window.py:1174
+#: src/playlist.py:47 src/window.py:887 src/window.py:1174
 msgid "File Error"
 msgstr "Erro de Arquivo"
 
-#: src/playlist.py:146 src/window.py:562 src/playlist.blp:23 src/window.blp:91
+#: src/playlist.py:160 src/window.py:562 src/playlist.blp:23 src/window.blp:91
 msgid "Add Files"
 msgstr "Adicionar Arquivos"
 

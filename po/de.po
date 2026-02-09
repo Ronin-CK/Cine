@@ -1,15 +1,15 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Cine
+# Copyright (C) 2025 Diego Povliuk
 # This file is distributed under the same license as the io.github.diegopvlk.Cine package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Jonas Harer <jonas.harer@icloud.com>, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-06 08:53-0300\n"
+"POT-Creation-Date: 2026-02-09 19:59-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
+"Last-Translator: Jonas Harer <jonas.harer@icloud.com>\n"
 "Language-Team: none\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -21,22 +21,22 @@ msgstr ""
 #: src/mpris.py:364 src/window.py:148 src/window.py:244 src/window.py:1295
 #: src/window.blp:6
 msgid "Cine"
-msgstr ""
+msgstr "Cine"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:3
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:23
 msgid "Play your videos"
-msgstr ""
+msgstr "Spiele deine Videos ab"
 
 #. TRANSLATORS: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/io.github.diegopvlk.Cine.desktop.in:10
 msgid "Audio;Video;Movie;TV;Film;Clip;Player;Cine;mpv;"
-msgstr ""
+msgstr "Audio;Video;Film;TV;Betrachter;Abspieler;Cine;mpv;"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:18 src/shortcuts-dialog.blp:11
 #: src/window.blp:117
 msgid "New Window"
-msgstr ""
+msgstr "Neues Fenster"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:25
 msgid ""
@@ -46,7 +46,7 @@ msgstr ""
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:27
 msgid "Simple Design: A refined, distraction-free interface"
-msgstr ""
+msgstr "Einfaches Design: Eine ablenkungsfreie Oberfläche"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:28
 msgid ""
@@ -71,7 +71,7 @@ msgstr ""
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:46 src/preferences.blp:5
 #: src/window.blp:122
 msgid "Preferences"
-msgstr ""
+msgstr "Einstellungen"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:50
 msgid "Video Options"
@@ -94,18 +94,18 @@ msgstr ""
 msgid "Original"
 msgstr ""
 
-#: src/playlist.py:48 src/window.py:887 src/window.py:1174
+#: src/playlist.py:47 src/window.py:887 src/window.py:1174
 msgid "File Error"
 msgstr ""
 
-#: src/playlist.py:146 src/window.py:562 src/playlist.blp:23 src/window.blp:91
+#: src/playlist.py:160 src/window.py:562 src/playlist.blp:23 src/window.blp:91
 msgid "Add Files"
 msgstr ""
 
 #: src/shortcuts.py:29 src/shortcuts.py:30 src/window.py:1225
 #: src/window.blp:197
 msgid "Volume"
-msgstr ""
+msgstr "Lautstärke"
 
 #: src/shortcuts.py:29
 msgid "Volume Increase"
@@ -147,7 +147,7 @@ msgstr ""
 #: src/shortcuts.py:41 src/shortcuts.py:42 src/window.py:1204
 #: src/window.blp:332
 msgid "Fullscreen"
-msgstr ""
+msgstr "Vollbild"
 
 #: src/shortcuts.py:50 src/shortcuts.py:51 src/shortcuts.py:52
 #: src/shortcuts.py:53 src/shortcuts.py:54 src/options.blp:226
@@ -356,7 +356,7 @@ msgstr ""
 #: src/window.py:534 src/shortcuts-dialog.blp:21 src/window.blp:86
 #: src/window.blp:426
 msgid "Open Folder"
-msgstr ""
+msgstr "Ordner öffnen"
 
 #: src/window.py:559 src/shortcuts-dialog.blp:16 src/window.blp:81
 msgid "Open Files"
@@ -391,16 +391,20 @@ msgid "Play"
 msgstr ""
 
 #: src/window.py:1204
+#, fuzzy
+#| msgid "Fullscreen"
 msgid "Exit Fullscreen"
-msgstr ""
+msgstr "Vollbild"
 
 #: src/options.blp:14
 msgid "Options"
-msgstr ""
+msgstr "Optionen"
 
 #: src/options.blp:32
+#, fuzzy
+#| msgid "Reset Flip"
 msgid "Reset All"
-msgstr ""
+msgstr "Spiegeln zurücksetzen"
 
 #: src/options.blp:44
 msgid "Reset Aspect Ratio"
@@ -428,19 +432,19 @@ msgstr ""
 
 #: src/options.blp:159
 msgid "Reset Flip"
-msgstr ""
+msgstr "Spiegeln zurücksetzen"
 
 #: src/options.blp:169
 msgid "Flip"
-msgstr ""
+msgstr "Spiegeln"
 
 #: src/options.blp:195
 msgid "Flip Horizontally"
-msgstr ""
+msgstr "Horizontal spiegeln"
 
 #: src/options.blp:203
 msgid "Flip Vertically"
-msgstr ""
+msgstr "Vertikal spiegeln"
 
 #: src/options.blp:216
 msgid "Reset Zoom"
@@ -463,8 +467,10 @@ msgid "Reset Saturation"
 msgstr ""
 
 #: src/options.blp:487
+#, fuzzy
+#| msgid "Reset"
 msgid "Reset Hue"
-msgstr ""
+msgstr "Zurücksetzten"
 
 #. TRANSLATORS: Do not use "Color" or "Temperature", those are different things
 #: src/options.blp:498 src/options.blp:521
@@ -501,7 +507,7 @@ msgstr ""
 
 #: src/preferences.blp:33 src/preferences.blp:79
 msgid "Reset"
-msgstr ""
+msgstr "Zurücksetzten"
 
 #: src/preferences.blp:43
 msgid "Subtitle Font"
@@ -533,15 +539,16 @@ msgstr ""
 
 #: src/preferences.blp:114
 msgid "Normalize Volume"
-msgstr ""
+msgstr "Lautstärke normalisieren"
 
 #: src/preferences.blp:118
 msgid "Save Video Position on Close"
-msgstr ""
+msgstr "Speichere Fortschritt beim Beenden"
 
 #: src/preferences.blp:119
 msgid "Also save options like brightness, subtitle delay, etc."
 msgstr ""
+"Speichert auch Einstellungen wie Helligkeit, Untertitelverzögerung, etc."
 
 #: src/preferences.blp:134
 msgid ""
@@ -570,19 +577,19 @@ msgstr ""
 
 #: src/shortcuts-dialog.blp:46
 msgid "Close Window"
-msgstr ""
+msgstr "Fenster schließen"
 
 #: src/shortcuts-dialog.blp:51
 msgid "Quit"
-msgstr ""
+msgstr "Beenden"
 
 #: src/window.blp:75
 msgid "Open"
-msgstr ""
+msgstr "Öffnen"
 
 #: src/window.blp:112
 msgid "Main Menu"
-msgstr ""
+msgstr "Hauptmenü"
 
 #: src/window.blp:127
 msgid "Keyboard Shortcuts"
@@ -590,7 +597,7 @@ msgstr ""
 
 #: src/window.blp:132
 msgid "About Cine"
-msgstr ""
+msgstr "Über Cine"
 
 #: src/window.blp:170
 msgid "Previous"
@@ -614,8 +621,17 @@ msgstr ""
 
 #: src/window.blp:402
 msgid "Drag and Drop Files Here"
-msgstr ""
+msgstr "Dateien hier ablegen"
 
 #: src/window.blp:415
 msgid "Open…"
-msgstr ""
+msgstr "Öffnen…"
+
+#~ msgid "Flip: Horizontal"
+#~ msgstr "Spiegeln: Horizontal"
+
+#~ msgid "Flip: Vertical"
+#~ msgstr "Spiegeln: Vertikal"
+
+#~ msgid "Flip: Reset"
+#~ msgstr "Spiegeln: Zurücksetzen"

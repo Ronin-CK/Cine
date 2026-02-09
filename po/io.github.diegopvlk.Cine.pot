@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-06 08:53-0300\n"
+"POT-Creation-Date: 2026-02-09 20:01-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -94,11 +94,11 @@ msgstr ""
 msgid "Original"
 msgstr ""
 
-#: src/playlist.py:48 src/window.py:887 src/window.py:1174
+#: src/playlist.py:47 src/window.py:887 src/window.py:1174
 msgid "File Error"
 msgstr ""
 
-#: src/playlist.py:146 src/window.py:562 src/playlist.blp:23 src/window.blp:91
+#: src/playlist.py:160 src/window.py:562 src/playlist.blp:23 src/window.blp:91
 msgid "Add Files"
 msgstr ""
 
