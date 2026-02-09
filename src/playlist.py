@@ -25,8 +25,7 @@ class Playlist(Adw.Dialog):
         self.win = window
         self.mpv = window.mpv
 
-        parent_height = window.get_height()
-        self.set_content_height(parent_height)
+        self.set_content_height(window.get_height())
 
         self._populate_list()
 
@@ -92,11 +91,11 @@ class Playlist(Adw.Dialog):
 
         for index, item in enumerate(playlist):
             path = item.get("filename", "")
-            subtitle = item.get("title") or os.path.basename(path)
+            file_title = item.get("title") or os.path.basename(path)
             parent_dir = os.path.basename(os.path.dirname(path))
-            title = parent_dir if parent_dir else path
+            dir = parent_dir if parent_dir else path
 
-            row = Adw.ActionRow(title=title, subtitle=subtitle)
+            row = Adw.ActionRow(title=dir, subtitle=file_title)
             row.add_css_class("property")
             row.set_activatable(True)
 
