@@ -12,7 +12,7 @@
   <url type="bugtracker">https://github.com/diegopvlk/Cine/issues</url>
   <url type="vcs-browser">https://github.com/diegopvlk/Cine</url>
   <url type="donation">https://www.paypal.com/donate?hosted_button_id=DVL7H35GA66X6</url>
-  <!-- <url type="translate"></url> -->
+  <url type="translate">https://hosted.weblate.org/projects/cine/app/</url>
   <update_contact>diego.pvlk@gmail.com</update_contact>
 
   <developer id="io.github.diegopvlk">
