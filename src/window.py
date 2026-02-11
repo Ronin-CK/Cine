@@ -1299,13 +1299,15 @@ class CineWindow(Adw.ApplicationWindow):
             GLib.idle_add(update_state)
 
         @self.mpv.property_observer("media-title")
-        def on_title_change(_name, value):
-            if value:
-
-                def set():
-                    title_no_ext = os.path.splitext(value)[0]
+        def on_title_change(_name, title):
+            def set():
+                if title == self.mpv.filename:
+                    title_no_ext = os.path.splitext(title)[0]
                     self.set_title(title_no_ext)
+                else:
+                    self.set_title(title)
 
+            if title:
                 GLib.idle_add(set)
 
         @self.mpv.property_observer("mute")
