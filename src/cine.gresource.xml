@@ -48,6 +48,7 @@
     <file alias="cine-playlist-m3u-symbolic.svg">../data/icons/scalable/actions/cine-playlist-m3u-symbolic.svg</file>
 
     <!-- missing icons from runtime(?) -->
+    <file alias="document-edit-symbolic.svg">../data/icons/scalable/actions/document-edit-symbolic.svg</file>
     <file alias="edit-undo-symbolic.svg">../data/icons/scalable/actions/edit-undo-symbolic.svg</file>
     <file alias="object-flip-horizontal-symbolic.svg">../data/icons/scalable/actions/object-flip-horizontal-symbolic.svg</file>
     <file alias="object-flip-vertical-symbolic.svg">../data/icons/scalable/actions/object-flip-vertical-symbolic.svg</file>
