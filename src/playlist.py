@@ -100,7 +100,7 @@ class Playlist(Adw.Dialog):
             row.add_css_class("property")
             row.set_activatable(True)
 
-            icon_name = "applications-multimedia-symbolic"
+            icon_name = "cine-applications-multimedia-symbolic"
 
             info = Gio.File.new_for_path(path).query_info(
                 "standard::content-type", Gio.FileQueryInfoFlags.NONE, None
@@ -108,18 +108,18 @@ class Playlist(Adw.Dialog):
             content_type = info.get_content_type()
 
             if content_type == "inode/directory":
-                icon_name = "folder-symbolic"
+                icon_name = "cine-folder-symbolic"
                 if not os.listdir(path):
                     row.set_sensitive(False)
             elif content_type:
                 if "mpegurl" in content_type:
-                    icon_name = "applications-multimedia-symbolic"
+                    icon_name = "cine-playlist-m3u-symbolic"
                 elif "audio" in content_type:
-                    icon_name = "audio-x-generic-symbolic"
+                    icon_name = "cine-audio-x-generic-symbolic"
                 elif "video" in content_type:
-                    icon_name = "video-x-generic-symbolic"
+                    icon_name = "cine-video-x-generic-symbolic"
                 elif "image" in content_type:
-                    icon_name = "image-x-generic-symbolic"
+                    icon_name = "cine-image-x-generic-symbolic"
 
             row.set_icon_name(icon_name)
             row.connect("activated", self._on_file_activated, index)
@@ -133,7 +133,7 @@ class Playlist(Adw.Dialog):
 
         if not hasattr(self, "playing_icon") or not self.playing_icon:
             self.playing_icon = Gtk.Image.new_from_icon_name(
-                "media-playback-start-symbolic"
+                "cine-playback-start-symbolic"
             )
 
         parent = self.playing_icon.get_parent()

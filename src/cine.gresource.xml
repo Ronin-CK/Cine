@@ -40,6 +40,13 @@
     <file alias="cine-view-fullscreen-symbolic.svg">../data/icons/scalable/actions/cine-view-fullscreen-symbolic.svg</file>
     <file alias="cine-view-restore-symbolic.svg">../data/icons/scalable/actions/cine-view-restore-symbolic.svg</file>
 
+    <file alias="cine-applications-multimedia-symbolic.svg">../data/icons/scalable/actions/cine-applications-multimedia-symbolic.svg</file>
+    <file alias="cine-audio-x-generic-symbolic.svg">../data/icons/scalable/actions/cine-audio-x-generic-symbolic.svg</file>
+    <file alias="cine-folder-symbolic.svg">../data/icons/scalable/actions/cine-folder-symbolic.svg</file>
+    <file alias="cine-image-x-generic-symbolic.svg">../data/icons/scalable/actions/cine-image-x-generic-symbolic.svg</file>
+    <file alias="cine-video-x-generic-symbolic.svg">../data/icons/scalable/actions/cine-video-x-generic-symbolic.svg</file>
+    <file alias="cine-playlist-m3u-symbolic.svg">../data/icons/scalable/actions/cine-playlist-m3u-symbolic.svg</file>
+
     <!-- missing icons from runtime(?) -->
     <file alias="edit-undo-symbolic.svg">../data/icons/scalable/actions/edit-undo-symbolic.svg</file>
     <file alias="object-flip-horizontal-symbolic.svg">../data/icons/scalable/actions/object-flip-horizontal-symbolic.svg</file>
