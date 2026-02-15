@@ -49,6 +49,7 @@ class Preferences(Adw.Dialog):
     hwdec_row: Adw.SwitchRow = Gtk.Template.Child()
     normalize_volume_row: Adw.SwitchRow = Gtk.Template.Child()
     save_position_switch: Gtk.Switch = Gtk.Template.Child()
+    show_filename_row: Adw.SwitchRow = Gtk.Template.Child()
 
     def __init__(self, active_window, **kwargs):
         super().__init__(**kwargs)
@@ -118,6 +119,12 @@ class Preferences(Adw.Dialog):
         settings.bind(
             "save-video-position",
             self.save_position_switch,
+            "active",
+            Gio.SettingsBindFlags.DEFAULT,
+        )
+        settings.bind(
+            "show-filename",
+            self.show_filename_row,
             "active",
             Gio.SettingsBindFlags.DEFAULT,
         )
