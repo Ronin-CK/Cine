@@ -139,6 +139,11 @@ class CineWindow(Adw.ApplicationWindow):
         self.last_seek_scroll_time: float = 0
         self.loaded_path: str
 
+        self._hold_speed_timer_id: int = 0
+        self._is_hold_speeding: bool = False
+        self._original_speed: float = 1.0
+        self._hold_speed_value: float = 2.0
+
         self.mpv_ctx: mpv.MpvRenderContext
 
         self.mpv = mpv.MPV(
@@ -310,6 +315,7 @@ class CineWindow(Adw.ApplicationWindow):
         click_gesture.set_button(0)
         click_gesture.connect("pressed", self._on_click_pressed)
         click_gesture.connect("released", self._on_click_released)
+        click_gesture.connect("cancel", lambda _g, _seq: self._cancel_hold_speed())
         self.video_overlay.add_controller(click_gesture)
 
         scroll_controller_overlay = Gtk.EventControllerScroll.new(
@@ -345,6 +351,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.motion_controls.set_propagation_limit(Gtk.PropagationLimit.NONE)
 
         self.connect("realize", self._on_realize)
+        self.connect("notify::is-active", lambda *_a: self._cancel_hold_speed())
 
         buttons = [
             self.primary_menu_button,
@@ -810,6 +817,23 @@ class CineWindow(Adw.ApplicationWindow):
 
         self.time_elapsed_label.set_width_chars(chars)
 
+    def _update_title(self):
+        from .preferences import settings
+        show_filename = settings.get_boolean("show-filename")
+        title = self.mpv.media_title
+        filename = self.mpv.filename
+
+        if not title and not filename:
+            return
+
+        if show_filename and filename:
+            self.set_title(os.path.splitext(filename)[0])
+        elif title:
+            if title == filename:
+                self.set_title(os.path.splitext(title)[0])
+            else:
+                self.set_title(title)
+
     def _on_play_pause_clicked(self, _button):
         self.mpv.pause = not self.mpv.pause
 
@@ -979,6 +1003,29 @@ class CineWindow(Adw.ApplicationWindow):
         except Exception:
             return
 
+    def _cancel_hold_speed(self):
+        """Safely cancel any active hold-speed state and restore original speed."""
+        if self._hold_speed_timer_id:
+            GLib.source_remove(self._hold_speed_timer_id)
+            self._hold_speed_timer_id = 0
+        if self._is_hold_speeding:
+            try:
+                self.mpv.speed = self._original_speed
+            except Exception:
+                pass
+            self._is_hold_speeding = False
+
+    def _on_hold_speed_start(self):
+        if self.mpv.idle_active:
+            self._hold_speed_timer_id = 0
+            return False
+        self._is_hold_speeding = True
+        self._original_speed = float(self.mpv.speed or 1.0)
+        self.mpv.speed = self._hold_speed_value
+        self.mpv.show_text(f"{self._hold_speed_value:g}x ⮞⮞")
+        self._hold_speed_timer_id = 0
+        return False
+
     def _on_click_pressed(self, gesture, n_press, _x, _y):
         button = gesture.get_current_button()
         mpv_button = MBTN_MAP.get(button)
@@ -988,15 +1035,24 @@ class CineWindow(Adw.ApplicationWindow):
 
         if mpv_button in ("MBTN_BACK", "MBTN_FORWARD"):
             self.mpv.keypress(mpv_button)
+        elif mpv_button == "MBTN_LEFT" and n_press == 1:
+            if self._hold_speed_timer_id:
+                GLib.source_remove(self._hold_speed_timer_id)
+            self._hold_speed_timer_id = GLib.timeout_add(
+                500, self._on_hold_speed_start
+            )
         else:
+            self._cancel_hold_speed()
             self.mpv.keydown(mpv_button)
 
         self._show_ui()
         self._hide_ui_timeout()
 
-        if mpv_button != "MBTN_LEFT":
-            gesture.set_state(Gtk.EventSequenceState.CLAIMED)
-        elif mpv_button == "MBTN_LEFT" and n_press == 2:
+        if mpv_button == "MBTN_LEFT":
+            if n_press == 2:
+                self._cancel_hold_speed()
+                gesture.set_state(Gtk.EventSequenceState.CLAIMED)
+        elif mpv_button != "MBTN_LEFT":
             gesture.set_state(Gtk.EventSequenceState.CLAIMED)
 
     def _on_click_released(self, gesture, _n_press, x, y):
@@ -1006,7 +1062,18 @@ class CineWindow(Adw.ApplicationWindow):
         if not mpv_button:
             return
 
-        self.mpv.keyup(mpv_button)
+        if mpv_button == "MBTN_LEFT":
+            if self._hold_speed_timer_id:
+                GLib.source_remove(self._hold_speed_timer_id)
+                self._hold_speed_timer_id = 0
+                self.mpv.keypress(mpv_button)
+            elif self._is_hold_speeding:
+                self._cancel_hold_speed()
+            else:
+                self.mpv.keyup(mpv_button)
+        else:
+            self.mpv.keyup(mpv_button)
+
         gesture.set_state(Gtk.EventSequenceState.CLAIMED)
 
     def _on_mouse_scroll(self, controller, dx, dy):
@@ -1300,15 +1367,13 @@ class CineWindow(Adw.ApplicationWindow):
 
         @self.mpv.property_observer("media-title")
         def on_title_change(_name, title):
-            def set():
-                filename = self.mpv.filename
-                if filename:
-                    title_no_ext = os.path.splitext(filename)[0]
-                    self.set_title(title_no_ext)
-                elif title:
-                    self.set_title(title)
+            if title:
+                GLib.idle_add(self._update_title)
 
-            GLib.idle_add(set)
+        from .preferences import settings
+        settings.connect(
+            "changed::show-filename", lambda *_: GLib.idle_add(self._update_title)
+        )
 
         @self.mpv.property_observer("mute")
         def on_mute_change(_name, value):
