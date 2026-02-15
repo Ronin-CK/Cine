@@ -696,6 +696,61 @@ template $OptionsMenuButton: MenuButton {
             value-changed => $_on_speed_changed();
           }
         }
+
+        // --- HOLD SPEED ---
+        Box {
+          Box {
+            halign: start;
+
+            Button {
+              icon-name: "edit-undo-symbolic";
+              tooltip-text: _("Reset Hold Speed");
+
+              styles [
+                "flat",
+              ]
+
+              clicked => $_on_hold_speed_reset();
+            }
+
+            Label {
+              label: _("Hold Speed");
+              wrap: true;
+              natural-wrap-mode: none;
+              halign: start;
+              margin-start: 8;
+
+              styles [
+                "heading",
+              ]
+            }
+          }
+
+          Separator {
+            hexpand: true;
+            opacity: 0;
+            margin-end: 2;
+          }
+
+          SpinButton hold_speed_spin {
+            halign: end;
+            climb-rate: 1;
+            digits: 2;
+
+            accessibility {
+              label: _("Hold Speed");
+            }
+
+            adjustment: Adjustment {
+              lower: 1.25;
+              upper: 10;
+              step-increment: 0.25;
+              value: 2;
+            };
+
+            value-changed => $_on_hold_speed_changed();
+          }
+        }
       }
     }
   };
