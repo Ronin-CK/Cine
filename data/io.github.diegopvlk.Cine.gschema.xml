@@ -28,5 +28,11 @@
 		<key name="subtitle-color" type="s">
 			<default>"#ebebeb"</default>
 		</key>
+
+		<key name="show-filename" type="b">
+			<default>false</default>
+			<summary>Show Filename as Title</summary>
+			<description>Show filename instead of metadata title in the title bar</description>
+		</key>
 	</schema>
 </schemalist>
