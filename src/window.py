@@ -139,6 +139,9 @@ class CineWindow(Adw.ApplicationWindow):
         self.last_seek_scroll_time: float = 0
         self.loaded_path: str
         self.startup: bool = True
+        self.click_hold_id: int = 0
+        self.click_holding = False
+        self.prev_speed: float = 1.0
 
         self.mpv_ctx: mpv.MpvRenderContext
 
@@ -311,6 +314,7 @@ class CineWindow(Adw.ApplicationWindow):
         click_gesture.set_button(0)
         click_gesture.connect("pressed", self._on_click_pressed)
         click_gesture.connect("released", self._on_click_released)
+        click_gesture.connect("cancel", self._cancel_click_hold)
         self.video_overlay.add_controller(click_gesture)
 
         scroll_controller_overlay = Gtk.EventControllerScroll.new(
@@ -432,7 +436,7 @@ class CineWindow(Adw.ApplicationWindow):
 
     def _on_mouse_motion(self, _controller, x, y):
         if None not in (x, y):
-            if (x, y) == self.prev_motion_xy:
+            if (x, y) == self.prev_motion_xy or self.click_holding:
                 return
 
             self.prev_motion_xy = (x, y)
@@ -981,34 +985,72 @@ class CineWindow(Adw.ApplicationWindow):
             return
 
     def _on_click_pressed(self, gesture, n_press, _x, _y):
-        button = gesture.get_current_button()
-        mpv_button = MBTN_MAP.get(button)
+        gtk_button = gesture.get_current_button()
+        button = MBTN_MAP.get(gtk_button)
 
-        if not mpv_button:
+        if not button:
             return
 
-        if mpv_button in ("MBTN_BACK", "MBTN_FORWARD"):
-            self.mpv.keypress(mpv_button)
+        if button in ("MBTN_BACK", "MBTN_FORWARD"):
+            self.mpv.keypress(button)
         else:
-            self.mpv.keydown(mpv_button)
+            self.mpv.keydown(button)
+
+        def on_click_hold():
+            self.click_holding = True
+            self.click_hold_id = 0
+            new_speed = self.prev_speed * 2
+
+            controls_hover = self.motion_controls.props.contains_pointer
+            header_hover = self.motion_header.props.contains_pointer
+
+            if controls_hover or header_hover or self.get_visible_dialog():
+                return
+
+            try:
+                self.prev_speed = cast(float, self.mpv["speed"])
+                self.mpv["speed"] = new_speed
+                self.mpv.show_text(f"{new_speed:g}× ⯈⯈", "100000000")
+                self.mpv.keypress(button)
+                gesture.set_state(Gtk.EventSequenceState.CLAIMED)
+            except mpv.ShutdownError:
+                pass
+
+        if button == "MBTN_LEFT" and n_press == 1 and not self.mpv.pause:
+            if self.click_hold_id:
+                GLib.source_remove(self.click_hold_id)
+
+            self.click_hold_id = GLib.timeout_add(275, on_click_hold)
 
         self._show_ui()
         self._hide_ui_timeout()
 
-        if mpv_button != "MBTN_LEFT":
+        if button != "MBTN_LEFT":
             gesture.set_state(Gtk.EventSequenceState.CLAIMED)
-        elif mpv_button == "MBTN_LEFT" and n_press == 2:
+        elif button == "MBTN_LEFT" and n_press == 2:
             gesture.set_state(Gtk.EventSequenceState.CLAIMED)
 
-    def _on_click_released(self, gesture, _n_press, x, y):
-        button = gesture.get_current_button()
-        mpv_button = MBTN_MAP.get(button)
+    def _on_click_released(self, gesture, _n_press, _x, _y):
+        gtk_button = gesture.get_current_button()
+        button = MBTN_MAP.get(gtk_button)
 
-        if not mpv_button:
+        self._cancel_click_hold()
+
+        if not button:
             return
 
-        self.mpv.keyup(mpv_button)
+        self.mpv.keyup(button)
         gesture.set_state(Gtk.EventSequenceState.CLAIMED)
+
+    def _cancel_click_hold(self, *args):
+        if self.click_hold_id:
+            GLib.source_remove(self.click_hold_id)
+            self.click_hold_id = 0
+
+        if self.click_holding:
+            self.mpv["speed"] = self.prev_speed
+            self.click_holding = False
+            self.mpv.show_text(f"{self.mpv["speed"]:g}×")
 
     def _on_mouse_scroll(self, controller, dx, dy):
         event: Gdk.ScrollEvent = controller.get_current_event()
