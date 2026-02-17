@@ -80,6 +80,7 @@ class CineWindow(Adw.ApplicationWindow):
     pause_indicator: Gtk.Image = Gtk.Template.Child()
     headerbar: Adw.HeaderBar = Gtk.Template.Child()
     controls_box: Gtk.Box = Gtk.Template.Child()
+    controls_separator: Gtk.Separator = Gtk.Template.Child()
     revealer_ui: Gtk.Revealer = Gtk.Template.Child()
     revealer_drop_indicator: Gtk.Revealer = Gtk.Template.Child()
     drop_label: Gtk.Label = Gtk.Template.Child()
@@ -346,6 +347,9 @@ class CineWindow(Adw.ApplicationWindow):
         self.motion_controls = Gtk.EventControllerMotion()
         self.headerbar.add_controller(self.motion_header)
         self.controls_box.add_controller(self.motion_controls)
+
+        self.motion_controls_separator = Gtk.EventControllerMotion()
+        self.controls_separator.add_controller(self.motion_controls_separator)
 
         # Sometimes when opening dialogs from menu items,
         # contains_pointer from these still returns True, even if not hovering
@@ -1018,7 +1022,15 @@ class CineWindow(Adw.ApplicationWindow):
         gtk_button = gesture.get_current_button()
         button = MBTN_MAP.get(gtk_button)
 
-        if not button:
+        controls_hover = self.motion_controls.props.contains_pointer
+        header_hover = self.motion_header.props.contains_pointer
+        separator_hover = self.motion_controls_separator.props.contains_pointer
+
+        if not button or (
+            button != "MBTN_RIGHT"
+            and (controls_hover or header_hover)
+            and not separator_hover
+        ):
             return
 
         if button in ("MBTN_BACK", "MBTN_FORWARD"):
@@ -1028,12 +1040,6 @@ class CineWindow(Adw.ApplicationWindow):
 
         def on_click_hold():
             self.click_hold_id = 0
-
-            controls_hover = self.motion_controls.props.contains_pointer
-            header_hover = self.motion_header.props.contains_pointer
-
-            if controls_hover or header_hover or self.get_visible_dialog():
-                return
 
             try:
                 self.click_holding = True
@@ -1050,7 +1056,7 @@ class CineWindow(Adw.ApplicationWindow):
             if self.click_hold_id:
                 GLib.source_remove(self.click_hold_id)
 
-            self.click_hold_id = GLib.timeout_add(350, on_click_hold)
+            self.click_hold_id = GLib.timeout_add(400, on_click_hold)
 
         self._show_ui()
         self._hide_ui_timeout()
