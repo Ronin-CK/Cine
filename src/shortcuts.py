@@ -58,7 +58,7 @@ PGUP           add sub-pos -1; show-text "{_("Subtitle Position")}: ${{sub-pos}}
 PGDWN          add sub-pos +1; show-text "{_("Subtitle Position")}: ${{sub-pos}}" #{_("Move Subtitles Down")}
 G              add sub-scale +0.05; show-text "{_("Subtitle Scale")}: ${{sub-scale}}" #{_("Increase Subtitle Scale")}
 F              add sub-scale -0.05; show-text "{_("Subtitle Scale")}: ${{sub-scale}}" #{_("Decrease Subtitle Scale")}
-m              cycle mute; show-text "{_("Mute")}: ${{mute}}" #{_("Mute/Unmute")}
+m              no-osd cycle mute; #{_("Mute/Unmute")}
 ctrl+-         add audio-delay -0.1; show-text "{_("Audio Delay")}: ${{audio-delay}}" #{_("Decrease Audio Delay")}
 ctrl+=         add audio-delay 0.1; show-text "{_("Audio Delay")}: ${{audio-delay}}" #{_("Increase Audio Delay")}
 ctrl++         add audio-delay 0.1; show-text "{_("Audio Delay")}: ${{audio-delay}}" #{_("Increase Audio Delay")}

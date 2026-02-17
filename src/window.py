@@ -1396,10 +1396,23 @@ class CineWindow(Adw.ApplicationWindow):
                 GLib.idle_add(set)
 
         @self.mpv.property_observer("mute")
-        def on_mute_change(_name, value):
+        def on_mute_change(_name, muted):
             def update():
-                self.mute_toggle_button.set_active(value)
-                self._update_volume_icon(value)
+                self.mute_toggle_button.set_active(muted)
+                self._update_volume_icon(muted)
+
+                if self.mpv.idle_active:
+                    return
+
+                mute_on_icon = "cine-volume-mute-symbolic"
+                mute_off_icon = "cine-volume-max-symbolic"
+
+                icon = mute_on_icon if muted else mute_off_icon
+                self.icon_indicator.props.icon_name = icon
+                self.revealer_icon_indicator.set_reveal_child(True)
+                GLib.timeout_add(
+                    350, self.revealer_icon_indicator.set_reveal_child, False
+                )
 
             GLib.idle_add(update)
 
