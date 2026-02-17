@@ -143,6 +143,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.click_hold_id: int = 0
         self.click_holding = False
         self.prev_speed: float = 1.0
+        self.hide_icon_indicator: bool = True
 
         self.mpv_ctx: mpv.MpvRenderContext
 
@@ -822,9 +823,7 @@ class CineWindow(Adw.ApplicationWindow):
         text = _("Pause") if is_paused else _("Play")
         self.play_pause_button.update_property([Gtk.AccessibleProperty.LABEL], [text])
 
-        if not self.mpv.idle_active:
-            self.revealer_icon_indicator.set_reveal_child(True)
-            GLib.timeout_add(350, self.revealer_icon_indicator.set_reveal_child, False)
+        self._show_icon_indicator()
 
     def _update_duration(self, duration):
         self.time_total_label.set_text(format_time(duration))
@@ -1232,6 +1231,14 @@ class CineWindow(Adw.ApplicationWindow):
             self.app.uninhibit(self.inhibit_id)
             self.inhibit_id = 0
 
+    def _show_icon_indicator(self):
+        if self.mpv.idle_active:
+            return
+
+        if not self.hide_icon_indicator:
+            self.revealer_icon_indicator.set_reveal_child(True)
+            GLib.timeout_add(350, self.revealer_icon_indicator.set_reveal_child, False)
+
     def _setup_observers(self):
         @self.mpv.event_callback("start-file")
         def on_start_file(event):
@@ -1380,6 +1387,7 @@ class CineWindow(Adw.ApplicationWindow):
                 if is_idle:
                     self.revealer_ui.set_reveal_child(True)
                     self.set_title(_("Cine"))
+                    self.hide_icon_indicator = True
 
                 self._sync_inhibit()
 
@@ -1399,6 +1407,8 @@ class CineWindow(Adw.ApplicationWindow):
                 else:
                     self.set_title(title)
 
+                self.hide_icon_indicator = False
+
             if title:
                 GLib.idle_add(set)
 
@@ -1408,7 +1418,7 @@ class CineWindow(Adw.ApplicationWindow):
                 self.mute_toggle_button.set_active(muted)
                 self._update_volume_icon(muted)
 
-                if self.mpv.idle_active:
+                if self.volume_menu_button.props.active:
                     return
 
                 mute_on_icon = "cine-volume-mute-symbolic"
@@ -1416,10 +1426,7 @@ class CineWindow(Adw.ApplicationWindow):
 
                 icon = mute_on_icon if muted else mute_off_icon
                 self.icon_indicator.props.icon_name = icon
-                self.revealer_icon_indicator.set_reveal_child(True)
-                GLib.timeout_add(
-                    350, self.revealer_icon_indicator.set_reveal_child, False
-                )
+                self._show_icon_indicator()
 
             GLib.idle_add(update)
 
@@ -1440,13 +1447,12 @@ class CineWindow(Adw.ApplicationWindow):
                         sub_on_icon if sub_on else sub_off_icon
                     )
 
-                    if name == "sub-visibility" and not self.mpv.idle_active:
-                        icon = sub_on_icon if sub_on else sub_off_icon
-                        self.icon_indicator.props.icon_name = icon
-                        self.revealer_icon_indicator.set_reveal_child(True)
-                        GLib.timeout_add(
-                            350, self.revealer_icon_indicator.set_reveal_child, False
-                        )
+                    if name != "sub-visibility":
+                        return
+
+                    icon = sub_on_icon if sub_on else sub_off_icon
+                    self.icon_indicator.props.icon_name = icon
+                    self._show_icon_indicator()
 
                 except mpv.ShutdownError:
                     pass
