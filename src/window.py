@@ -301,6 +301,7 @@ class CineWindow(Adw.ApplicationWindow):
     def _setup_event_handlers(self):
         key_controller = Gtk.EventControllerKey()
         key_controller.connect("key-pressed", self._on_key_pressed)
+        key_controller.connect("key-released", self._on_key_released)
         key_controller.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
         self.add_controller(key_controller)
 
@@ -986,6 +987,11 @@ class CineWindow(Adw.ApplicationWindow):
             self.mpv.fullscreen = False
             return
 
+        if key_name in ("backslash", "bar"):
+            if not self.click_holding:
+                self._start_hold_speed()
+            return True
+
         if key_name in ("Tab", "ISO_Left_Tab", "Return"):
             self.revealer_ui.set_reveal_child(True)
             self._hide_ui_timeout(s=3)
@@ -1041,16 +1047,10 @@ class CineWindow(Adw.ApplicationWindow):
         def on_click_hold():
             self.click_hold_id = 0
 
-            try:
-                self.click_holding = True
-                self.prev_speed = cast(float, self.mpv["speed"])
-                new_speed = self._hold_speed_value
-                self.mpv["speed"] = new_speed
-                self.mpv.show_text(f"{new_speed:g}× ⯈⯈", "100000000")
+            self._start_hold_speed()
+            if self.click_holding:
                 self.mpv.keypress(button)
                 gesture.set_state(Gtk.EventSequenceState.CLAIMED)
-            except mpv.ShutdownError:
-                pass
 
         if button == "MBTN_LEFT" and n_press == 1 and not self.mpv.pause:
             if self.click_hold_id:
@@ -1083,10 +1083,31 @@ class CineWindow(Adw.ApplicationWindow):
             GLib.source_remove(self.click_hold_id)
             self.click_hold_id = 0
 
+
         if self.click_holding:
             self.mpv["speed"] = self.prev_speed
             self.click_holding = False
-            self.mpv.show_text(f"{self.mpv["speed"]:g}×")
+            self.mpv.show_text(f"{self.mpv['speed']:g}×")
+
+    def _start_hold_speed(self):
+        if self.click_holding:
+            return
+
+        try:
+            self.click_holding = True
+            self.prev_speed = cast(float, self.mpv["speed"])
+            new_speed = self._hold_speed_value
+            self.mpv["speed"] = new_speed
+            self.mpv.show_text(f"{new_speed:g}× ⯈⯈", "100000000")
+        except mpv.ShutdownError:
+            pass
+
+    def _on_key_released(self, _controller, keyval, _keycode, _state):
+        key_name = Gdk.keyval_name(keyval)
+
+        if key_name in ("backslash", "bar"):
+            self._cancel_click_hold()
+            return True
 
     def _on_mouse_scroll(self, controller, dx, dy):
         event: Gdk.ScrollEvent = controller.get_current_event()
