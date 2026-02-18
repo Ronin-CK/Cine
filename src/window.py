@@ -1305,20 +1305,19 @@ class CineWindow(Adw.ApplicationWindow):
         @self.mpv.property_observer("volume")
         def on_volume_change(_name, value):
             def update_icon_and_vol_adj():
+                vol = int(value)
                 # block the signal to not trigger value-changed
                 self.volume_scale.handler_block(self.volume_handler_id)
-                self.volume_scale_adjustment.set_value(int(value))
+                self.volume_scale_adjustment.set_value(vol)
+                self.volume_scale.handler_unblock(self.volume_handler_id)
 
                 if not self.mpv.mute:
-                    self.mpv.show_text(_("Volume") + f": {int(value)}%")
-                else:
-                    self.mpv.show_text(
-                        _("Volume") + f": {int(value)}% " + f"({_("Muted")})"
-                    )
+                    self.mpv.show_text(_("Volume") + f": {vol}%")
+                elif vol > 0:
+                    self.mpv.mute = False
 
-                self.volume_scale.handler_unblock(self.volume_handler_id)
                 self._update_volume_icon(self.mpv.mute)
-                settings.set_int("volume", int(value))
+                settings.set_int("volume", vol)
 
             GLib.idle_add(update_icon_and_vol_adj)
 
