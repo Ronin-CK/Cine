@@ -26,14 +26,14 @@ gi.require_version("Gtk", "4.0")
 from gi.repository import Adw, Gtk
 
 INTERNAL_BINDINGS = f"""\
-UP             no-osd add volume 5; #{_("Volume Increase")}
-DOWN           no-osd add volume -5; #{_("Volume Decrease")}
-WHEEL_UP       no-osd add volume 5
-WHEEL_DOWN     no-osd add volume -5
+UP             no-osd add volume 5; show-text "{_("Volume")}: ${{volume}}%" #{_("Volume Increase")}
+DOWN           no-osd add volume -5; show-text "{_("Volume")}: ${{volume}}%" #{_("Volume Decrease")}
+WHEEL_UP       no-osd add volume 5; show-text "{_("Volume")}: ${{volume}}%"
+WHEEL_DOWN     no-osd add volume -5; show-text "{_("Volume")}: ${{volume}}%"
 k              cycle pause; #{_("Play/Pause")}
 p              cycle pause; #{_("Play/Pause")}
 SPACE          cycle pause; #{_("Play/Pause")}
-c              no-osd cycle sub-visibility; #{_("Show/Hide Subtitles")}
+c              no-osd cycle sub-visibility; no-osd set user-data/show-icon "yes" #{_("Show/Hide Subtitles")}
 j              seek -10 exact; show-text "⯇⯇" #{_("Seek 10s Backward")}
 l              seek 10 exact; show-text "⯈⯈" #{_("Seek 10s Forward")}
 LEFT           seek -5 exact; show-text "⯇⯇" #{_("Seek 5s Backward")}
@@ -58,7 +58,7 @@ PGUP           add sub-pos -1; show-text "{_("Subtitle Position")}: ${{sub-pos}}
 PGDWN          add sub-pos +1; show-text "{_("Subtitle Position")}: ${{sub-pos}}" #{_("Move Subtitles Down")}
 G              add sub-scale +0.05; show-text "{_("Subtitle Scale")}: ${{sub-scale}}" #{_("Increase Subtitle Scale")}
 F              add sub-scale -0.05; show-text "{_("Subtitle Scale")}: ${{sub-scale}}" #{_("Decrease Subtitle Scale")}
-m              no-osd cycle mute; #{_("Mute/Unmute")}
+m              no-osd cycle mute; no-osd set user-data/show-icon "yes" #{_("Mute/Unmute")}
 ctrl+-         add audio-delay -0.1; show-text "{_("Audio Delay")}: ${{audio-delay}}" #{_("Decrease Audio Delay")}
 ctrl+=         add audio-delay 0.1; show-text "{_("Audio Delay")}: ${{audio-delay}}" #{_("Increase Audio Delay")}
 ctrl++         add audio-delay 0.1; show-text "{_("Audio Delay")}: ${{audio-delay}}" #{_("Increase Audio Delay")}
@@ -75,9 +75,9 @@ ctrl+[         frame-step -1 seek #{_("Go Back One Frame")}
 ctrl+]         frame-step 1 seek #{_("Advance One Frame")}
 Ctrl+LEFT      add chapter -1 #{_("Seek to the Previous Chapter")}
 Ctrl+RIGHT     add chapter 1 #{_("Seek to the Next Chapter")}
-VOLUME_UP      no-osd add volume 5
-VOLUME_DOWN    no-osd add volume -5
-MUTE           cycle mute
+VOLUME_UP      no-osd add volume 5; show-text "{_("Volume")}: ${{volume}}%"
+VOLUME_DOWN    no-osd add volume -5; show-text "{_("Volume")}: ${{volume}}%"
+MUTE           no-osd cycle mute; no-osd set user-data/show-icon "yes"
 s              screenshot #{_("Take Screenshot With Subtitles")}
 S              screenshot video #{_("Take Screenshot Without Subtitles")}
 i              script-binding stats/display-stats #{_("Statistics")}
