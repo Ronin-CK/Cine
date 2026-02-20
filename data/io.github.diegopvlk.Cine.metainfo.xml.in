@@ -71,6 +71,18 @@
   </requires>
 
   <releases>
+    <release version="1.0.9" date="2026-02-20">
+      <description translate="no">
+        <ul>
+          <li>New: Volume level is now always restored at startup</li>
+          <li>New: Toggle elapsed/remaining time by clicking on it</li>
+          <li>New: Button/action to add folder to playlist</li>
+          <li>New: Hold click to double playback speed</li>
+          <li>Added icon indicators for subtitle/mute on/off</li>
+          <li>Unmute when changing volume</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.0.8" date="2026-02-15">
       <description translate="no">
         <ul>
