@@ -23,6 +23,7 @@ import mpv
 import ctypes
 from typing import cast
 from gettext import gettext as _
+from urllib.parse import urlparse
 
 from .utils import (
     is_local_path,
@@ -226,12 +227,15 @@ class CineWindow(Adw.ApplicationWindow):
         self._create_action("add-playlist-files", self._on_add_playlist_dialog)
         self._create_action("open-folder", self._on_open_folder_dialog)
         self._create_action("open-url", self._on_open_url)
+        self._create_action("add-url", self._on_add_url)
         self._create_action("add-playlist-folder", self._on_open_folder_dialog)
         self._create_action("open-playlist-dialog", self._on_open_playlist)
         self._create_action("open-sub-menu", self._on_open_sub_menu)
         self._create_action("open-audio-menu", self._on_open_audio_menu)
+
         self.app.set_accels_for_action("win.open-folder", ["<primary>i"])
         self.app.set_accels_for_action("win.open-url", ["<primary>u"])
+        self.app.set_accels_for_action("win.add-url", ["<shift><primary>u"])
         self.app.set_accels_for_action("win.add-playlist-folder", ["<shift><primary>i"])
         self.app.set_accels_for_action("win.open-playlist-dialog", ["<primary>p"])
         self.app.set_accels_for_action("win.clear-and-add", ["<primary>o"])
@@ -705,10 +709,12 @@ class CineWindow(Adw.ApplicationWindow):
         self._show_ui()
         self.audio_tracks_menu_button.popup()
 
-    def _on_open_url(self, *args):
+    def _on_open_url(self, *args, add=False):
+        mode = "append-play" if add else "replace"
         view = Adw.ToolbarView()
         header_bar = Adw.HeaderBar()
-        header_bar.set_title_widget(Adw.WindowTitle(title=_("Open URL")))
+        h_title = _("Add URL") if add else _("Open URL")
+        header_bar.set_title_widget(Adw.WindowTitle(title=h_title))
         view.add_top_bar(header_bar)
 
         content_box = Gtk.Box(
@@ -728,29 +734,48 @@ class CineWindow(Adw.ApplicationWindow):
         content_box.append(list_box)
 
         btn_open = Gtk.Button(
-            label=_("Open"),
+            label=_("Add") if add else _("Open"),
             css_classes=["pill", "suggested-action"],
             halign=Gtk.Align.CENTER,
+            sensitive=False,
         )
 
         content_box.append(btn_open)
-        dialog = Adw.Dialog(content_width=450, child=view)
+        dialog = Adw.Dialog(content_width=450, child=view, default_widget=btn_open)
+        self.url = ""
+
+        def is_valid_input(text):
+            url = text.strip()
+            parsed = urlparse(url)
+            if parsed.scheme in cast(list, self.mpv.protocol_list):
+                self.url = url
+                return True
+            elif os.path.exists(url):
+                self.url = url
+                return True
+            elif url:
+                self.url = f"https://{url}"
+                return True
+            return False
+
+        def on_text_changed(*_):
+            is_valid = is_valid_input(entry_row.get_text())
+            btn_open.set_sensitive(is_valid)
+
+        entry_row.connect("notify::text", on_text_changed)
 
         def open_url(*args):
-            url = entry_row.get_text().strip()
-            self.mpv.loadfile(url)
+            self.mpv.loadfile(self.url, mode)
             dialog.close()
+            if dialog_p := cast(Playlist, self.get_visible_dialog()):
+                if dialog_p.props.name == "playlist":
+                    dialog_p._populate_list()
 
         btn_open.connect("clicked", open_url)
-        dialog.set_default_widget(btn_open)
-        btn_open.set_sensitive(False)
-
-        entry_row.connect(
-            "notify::text",
-            lambda *_: btn_open.set_sensitive(len(entry_row.get_text().strip()) > 0),
-        )
-
         dialog.present(self)
+
+    def _on_add_url(self, *args):
+        self._on_open_url(add=True)
 
     def setup_preview_player(self):
         if not self.local_path:
@@ -1059,7 +1084,8 @@ class CineWindow(Adw.ApplicationWindow):
             self.mpv.command("playlist-unshuffle")
 
         if dialog := cast(Playlist, self.get_visible_dialog()):
-            dialog._populate_list()
+            if dialog.props.name == "playlist":
+                dialog._populate_list()
 
     def _on_loop_playlist_toggled(self, button):
         if button.props.active:
