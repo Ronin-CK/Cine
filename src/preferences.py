@@ -192,8 +192,8 @@ class Preferences(Adw.Dialog):
             self.win.preview_player = None
             self.win.thumb_preview.props.visible = False
         elif not self.player.idle_active:
-            self.win.setup_preview_player()
             self.win.thumb_preview.props.visible = True
+            self.win.setup_preview_player()
 
     def _on_save_pos_changed(self, settings, key):
         self.player["save-position-on-quit"] = settings.get_boolean(key)

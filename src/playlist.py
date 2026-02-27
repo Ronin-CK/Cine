@@ -27,6 +27,7 @@ gi.require_version("GLib", "2.0")
 gi.require_version("Gtk", "4.0")
 from gi.repository import Adw, Gio, Gdk, GLib, Gtk
 from gettext import gettext as _
+from .utils import is_local_path
 
 
 @Gtk.Template(resource_path="/io/github/diegopvlk/Cine/playlist.ui")
@@ -117,14 +118,18 @@ class Playlist(Adw.Dialog):
 
             row = Adw.ActionRow(title=dir)
             row.add_css_class("property")
-            row.set_activatable(True)
+            row.props.activatable = True
 
             icon_name = "cine-applications-multimedia-symbolic"
 
-            info = Gio.File.new_for_path(path).query_info(
-                "standard::content-type", Gio.FileQueryInfoFlags.NONE, None
-            )
-            content_type = info.get_content_type()
+            if not is_local_path(path):
+                content_type = "mpv-url"
+            else:
+                info = Gio.File.new_for_path(path).query_info(
+                    "standard::content-type", Gio.FileQueryInfoFlags.NONE, None
+                )
+                content_type = info.get_content_type()
+
             if content_type == "inode/directory":
                 icon_name = "cine-folder-symbolic"
                 if not os.listdir(path):
@@ -138,6 +143,9 @@ class Playlist(Adw.Dialog):
                     icon_name = "cine-video-x-generic-symbolic"
                 elif "image" in content_type:
                     icon_name = "cine-image-x-generic-symbolic"
+                elif content_type == "mpv-url":
+                    icon_name = "cine-globe-symbolic"
+
                 file_title = os.path.splitext(path_with_ext)[0]
 
             row.set_subtitle(file_title)

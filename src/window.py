@@ -25,6 +25,7 @@ from typing import cast
 from gettext import gettext as _
 
 from .utils import (
+    is_local_path,
     get_gpu_vendor,
     format_time,
     MBTN_MAP,
@@ -49,7 +50,8 @@ gi.require_version("GLib", "2.0")
 gi.require_version("Gtk", "4.0")
 gi.require_version("GdkWayland", "4.0")
 gi.require_version("GdkX11", "4.0")
-from gi.repository import Adw, Gio, Gdk, GLib, Gtk
+gi.require_version("GObject", "2.0")
+from gi.repository import Adw, Gio, Gdk, GLib, Gtk, GObject
 from gi.repository import (
     GdkWayland,  # pyright: ignore[reportAttributeAccessIssue]
     GdkX11,
@@ -149,6 +151,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.hide_icon_indicator: bool = True
         self.preview_player: mpv.MPV | None = None
         self.update_preview_id: int = 0
+        self.local_path: bool = True
 
         self.mpv_ctx: mpv.MpvRenderContext
 
@@ -188,6 +191,7 @@ class CineWindow(Adw.ApplicationWindow):
             volume_max=150,
             keep_open=True,
             keep_open_pause=False,
+            ytdl=True,
         )
 
         self.conf_hwdec = list(
@@ -221,11 +225,13 @@ class CineWindow(Adw.ApplicationWindow):
         self._create_action("add-audio-tracks", self._on_add_audio_dialog)
         self._create_action("add-playlist-files", self._on_add_playlist_dialog)
         self._create_action("open-folder", self._on_open_folder_dialog)
+        self._create_action("open-url", self._on_open_url)
         self._create_action("add-playlist-folder", self._on_open_folder_dialog)
         self._create_action("open-playlist-dialog", self._on_open_playlist)
         self._create_action("open-sub-menu", self._on_open_sub_menu)
         self._create_action("open-audio-menu", self._on_open_audio_menu)
         self.app.set_accels_for_action("win.open-folder", ["<primary>i"])
+        self.app.set_accels_for_action("win.open-url", ["<primary>u"])
         self.app.set_accels_for_action("win.add-playlist-folder", ["<shift><primary>i"])
         self.app.set_accels_for_action("win.open-playlist-dialog", ["<primary>p"])
         self.app.set_accels_for_action("win.clear-and-add", ["<primary>o"])
@@ -370,6 +376,7 @@ class CineWindow(Adw.ApplicationWindow):
         scroll_controller_vol.connect("scroll", self._on_mouse_scroll_volume)
 
         drop_target = Gtk.DropTarget.new(Gdk.FileList, Gdk.DragAction.COPY)
+        drop_target.set_gtypes([Gdk.FileList, GObject.TYPE_STRING])
         drop_target.connect("enter", self._on_drop_enter)
         drop_target.connect("leave", self._on_drop_leave)
         drop_target.connect("drop", self._on_drop)
@@ -698,7 +705,58 @@ class CineWindow(Adw.ApplicationWindow):
         self._show_ui()
         self.audio_tracks_menu_button.popup()
 
+    def _on_open_url(self, *args):
+        view = Adw.ToolbarView()
+        header_bar = Adw.HeaderBar()
+        header_bar.set_title_widget(Adw.WindowTitle(title=_("Open URL")))
+        view.add_top_bar(header_bar)
+
+        content_box = Gtk.Box(
+            orientation=Gtk.Orientation.VERTICAL,
+            spacing=18,
+            margin_bottom=18,
+            margin_start=18,
+            margin_end=18,
+        )
+
+        view.set_content(content_box)
+        entry_row = Adw.EntryRow(title=_("URL"), activates_default=True)
+        list_box = Gtk.ListBox(
+            selection_mode=Gtk.SelectionMode.NONE, css_classes=["boxed-list"]
+        )
+        list_box.append(entry_row)
+        content_box.append(list_box)
+
+        btn_open = Gtk.Button(
+            label=_("Open"),
+            css_classes=["pill", "suggested-action"],
+            halign=Gtk.Align.CENTER,
+        )
+
+        content_box.append(btn_open)
+        dialog = Adw.Dialog(content_width=450, child=view)
+
+        def open_url(*args):
+            url = entry_row.get_text().strip()
+            self.mpv.loadfile(url)
+            dialog.close()
+
+        btn_open.connect("clicked", open_url)
+        dialog.set_default_widget(btn_open)
+        btn_open.set_sensitive(False)
+
+        entry_row.connect(
+            "notify::text",
+            lambda *_: btn_open.set_sensitive(len(entry_row.get_text().strip()) > 0),
+        )
+
+        dialog.present(self)
+
     def setup_preview_player(self):
+        if not self.local_path:
+            self.thumb_preview.props.visible = False
+            return
+
         try:
             params = cast(dict, self.mpv.video_params)
             v_width = params.get("w") or 1920
@@ -831,7 +889,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.chapter_popover.set_pointing_to(rect)
         self.chapter_popover.popup()
 
-        if not settings.get_boolean("thumbnail-preview"):
+        if not settings.get_boolean("thumbnail-preview") or not self.local_path:
             return
 
         if self.update_preview_id > 0:
@@ -1044,18 +1102,24 @@ class CineWindow(Adw.ApplicationWindow):
     def _on_drop_enter(self, target, _x, _y):
         GLib.timeout_add(10, self.revealer_drop_indicator.set_reveal_child, True)
         drop = target.get_current_drop()
+        formats = drop.get_formats()
+        target_type = (
+            Gdk.FileList if formats.contain_gtype(Gdk.FileList) else GObject.TYPE_STRING
+        )
 
         def on_read_done(source, result):
             try:
                 value = source.read_value_finish(result)
-                files = value.get_files()
-                f_name = files[0].get_basename().lower()
-                is_playing = not self.mpv.idle_active
 
-                if is_playing and any(f_name.endswith(ext) for ext in SUB_EXTS):
-                    self.drop_icon.props.icon_name = "cine-subtitles-symbolic"
-                    self.drop_label.props.label = _("Add Subtitle Track")
-                    return
+                if isinstance(value, Gdk.FileList):
+                    f_name = value.get_files()[0].get_basename() or ""
+                    f_name = f_name.lower()
+                    is_playing = not self.mpv.idle_active
+
+                    if is_playing and any(f_name.endswith(ext) for ext in SUB_EXTS):
+                        self.drop_icon.props.icon_name = "cine-subtitles-symbolic"
+                        self.drop_label.props.label = _("Add Subtitle Track")
+                        return
 
                 self.drop_icon.props.icon_name = "cine-playback-start-symbolic"
                 self.drop_label.props.label = _("Play")
@@ -1067,8 +1131,7 @@ class CineWindow(Adw.ApplicationWindow):
                 self.spinner.set_visible(False)
                 return
 
-        drop.read_value_async(Gdk.FileList, GLib.PRIORITY_DEFAULT, None, on_read_done)
-
+        drop.read_value_async(target_type, GLib.PRIORITY_DEFAULT, None, on_read_done)
         return True
 
     def _on_drop_leave(self, _target):
@@ -1076,37 +1139,56 @@ class CineWindow(Adw.ApplicationWindow):
         GLib.timeout_add(100, self.drop_icon.set_from_icon_name, "")
         GLib.timeout_add(100, self.drop_label.set_text, "")
 
-    def _on_drop(self, _target, list: Gdk.FileList, _x, _y):
+    def _on_drop(self, _target, value, _x, _y, from_playlist=False):
         first_file = True
 
-        for file in list.get_files():
-            info = file.query_info(
-                "standard::content-type,standard::type",
-                Gio.FileQueryInfoFlags.NONE,
-                None,
-            )
-            path = file.get_path() or file.get_uri()
-            file_type = info.get_file_type()
-            mime_type = info.get_content_type() or ""
+        items: list[Gio.File] | list[str] = (
+            value.get_files()
+            if isinstance(value, Gdk.FileList)
+            else [value] if isinstance(value, str) else []
+        )
 
+        for item in items:
             mode = "replace" if first_file else "append-play"
 
-            if file_type == Gio.FileType.DIRECTORY:
-                self.mpv.loadfile(path, mode)
+            if isinstance(item, Gio.File):
+                path = item.get_path() or item.get_uri()
+
+                # URL Thumbnail
+                is_url = not is_local_path(path)
+
+                if is_url:
+                    self.mpv.loadfile(path, mode)
+                    first_file = False
+                    continue
+                else:
+                    info = item.query_info(
+                        "standard::content-type,standard::type",
+                        Gio.FileQueryInfoFlags.NONE,
+                        None,
+                    )
+
+                file_type = info.get_file_type()
+                mime_type = info.get_content_type() or ""
+
+                if file_type == Gio.FileType.DIRECTORY:
+                    self.mpv.loadfile(path, mode)
+                    first_file = False
+                    continue
+
+                name = cast(str, item.get_basename()).lower()
+                if name.endswith(SUB_EXTS):
+                    if not self.mpv.idle_active and not from_playlist:
+                        self.mpv.command("sub-add", path, "select")
+                    continue
+
+                if mime_type.startswith(("video/", "audio/", "image/")) or is_url:
+                    self.mpv.loadfile(path, mode)
+                    first_file = False
+
+            elif isinstance(item, str):  # URL string
+                self.mpv.loadfile(item, mode)
                 first_file = False
-                continue
-
-            name = cast(str, file.get_basename()).lower()
-            if name.endswith(SUB_EXTS):
-                if not self.mpv.idle_active:
-                    self.mpv.command("sub-add", path, "select")
-                continue
-
-            valid_types = ("video/", "audio/", "image/")
-            if mime_type.startswith(valid_types):
-                self.mpv.loadfile(path, mode)
-                first_file = False
-
         GLib.idle_add(
             lambda *a: self._on_shuffle_toggled(self.playlist_shuffle_toggle_button)
         )
@@ -1387,14 +1469,19 @@ class CineWindow(Adw.ApplicationWindow):
 
         @self.mpv.event_callback("file-loaded")
         def on_files_loaded(event):
-            GLib.idle_add(self.spinner.set_visible, False)
-            if settings.get_boolean("thumbnail-preview"):
-                self.setup_preview_player()
-                self.thumb_preview.props.visible = True
-            elif self.preview_player:
-                self.thumb_preview.props.visible = False
-                self.preview_player.terminate()
-                self.preview_player = None
+            def set():
+                self.spinner.set_visible(False)
+                self.local_path = is_local_path(self.mpv.path)
+
+                if settings.get_boolean("thumbnail-preview"):
+                    self.thumb_preview.props.visible = True
+                    self.setup_preview_player()
+                elif self.preview_player:
+                    self.thumb_preview.props.visible = False
+                    self.preview_player.terminate()
+                    self.preview_player = None
+
+            GLib.idle_add(set)
 
         @self.mpv.event_callback("end-file")
         def on_end_file(event):
