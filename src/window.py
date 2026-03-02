@@ -318,7 +318,7 @@ class CineWindow(Adw.ApplicationWindow):
         # video_progress_scale can be different heights because of marks, use a box instead
         self.chapter_popover.set_parent(self.vid_progress_scale_box)
         self.chapter_popover.set_autohide(False)
-
+        self.chapter_popover.set_has_arrow(False)
         self.chapter_popover.add_css_class("chapter-popover")
 
         self.popover_content_box = Gtk.Box()
@@ -335,6 +335,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.chapter_popover_label.set_justify(Gtk.Justification.CENTER)
         self.chapter_popover_label.set_xalign(0.5)
         self.chapter_popover_label.add_css_class("numeric")
+        self.chapter_popover_label.set_halign(Gtk.Align.CENTER)
 
         self.popover_content_box.append(self.chapter_popover_label)
         self.chapter_popover.set_child(self.popover_content_box)
@@ -907,7 +908,7 @@ class CineWindow(Adw.ApplicationWindow):
 
         rect = Gdk.Rectangle()
         rect.x = clamped_x
-        rect.y = 2
+        rect.y = 0
         rect.width = 41
 
         self.chapter_popover.set_pointing_to(rect)

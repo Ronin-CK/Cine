@@ -80,9 +80,9 @@
   border-radius: 2px;
 }
 
-.osd popover > contents,
+.osd popover:not(.chapter-popover) > contents,
 .osd popover > arrow {
-  border: 1px solid #202021;
+  border: 1px solid #212122;
   background: rgba(25, 25, 27, 0.95);
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.33);
 }
@@ -176,25 +176,37 @@ statuspage box {
   background: none;
 }
 
-.chapter-popover contents {
-  padding: 2px;
-}
 .chapter-popover label {
-  padding: 6px;
+  padding: 7px 11px;
+  margin-bottom: -7px;
 }
-.chapter-popover picture {
-  border-radius: 12px;
-  margin: 0px;
-  margin-bottom: 3px;
+.chapter-popover > contents {
+  background: transparent;
+}
+.chapter-popover > contents picture,
+.chapter-popover > contents label {
+  border: 1px solid #212122;
+  background: rgba(25, 25, 27, 0.95);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.33);
+  border-radius: 13px;
+}
+.chapter-popover > contents picture {
+  margin-bottom: 8px;
+  border: none;
+  box-shadow:
+    0px 0px 5px 1px rgba(20, 20, 20, 0.5),
+    0px 0px 0px 1px rgba(144, 144, 144, 0.2);
 }
 
 @media (prefers-contrast: more) {
-  .chapter-popover picture,
-  .osd popover > contents,
-  .osd popover > arrow {
+  .osd popover:not(.chapter-popover) > contents,
+  .osd popover > arrow,
+  .chapter-popover > contents label {
     border: 1px solid var(--border-color);
   }
-
+  .chapter-popover > contents picture {
+    border: 1px solid rgba(255, 255, 255, 0.9);
+  }
   .header-and-controls {
     background:
       linear-gradient(
