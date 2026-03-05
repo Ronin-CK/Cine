@@ -198,6 +198,11 @@ statuspage box {
     0px 0px 0px 1px rgba(144, 144, 144, 0.2);
 }
 
+.options-menu-btn popover button,
+.options-menu-btn popover spinbutton {
+  min-height: 22px;
+}
+
 @media (prefers-contrast: more) {
   .osd popover:not(.chapter-popover) > contents,
   .osd popover > arrow,
