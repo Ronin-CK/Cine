@@ -9,16 +9,17 @@ msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-05 10:02-0300\n"
-"PO-Revision-Date: 2026-02-28 11:40-0300\n"
-"Last-Translator: Muhammed Al-Basha <contact.mu7basha@gmail.com>\n"
-"Language-Team: Arabic\n"
+"PO-Revision-Date: 2026-03-07 14:09+0000\n"
+"Last-Translator: Muhammed Al-Basha "
+"<mu7basha@users.noreply.hosted.weblate.org>\n"
+"Language-Team: Arabic <https://hosted.weblate.org/projects/cine/app/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural= n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
-"X-Generator: Gtranslator 49.0\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:210 src/mpris.py:146
 #: src/mpris.py:364 src/window.py:166 src/window.py:271 src/window.py:1694
@@ -46,7 +47,7 @@ msgid ""
 "Cine combines a clean interface with a high-performance engine to deliver a "
 "seamless viewing experience."
 msgstr ""
-"سيني يجمع بين واجهة نظيفة ومحرك عالي الأداء لتوفير تجربة مشاهدة لا مثيل لها"
+"سيني يجمع بين واجهة نظيفة ومحرك عالي الأداء لتوفير تجربة مشاهدة لا مثيل لها."
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:27
 msgid "Simple Design: A refined, distraction-free interface"
@@ -56,12 +57,13 @@ msgstr "تصميم بسيط: واجهة موحَّدة، بلا ازعاج"
 msgid ""
 "MPV-Based: Leverages the robust power of MPV for great playback and format "
 "support"
-msgstr "MPV كأساس: مستغلًا قوة MPV لتجربة تشغيل رائعة ودعم جيد للصيغة"
+msgstr ""
+"MPV كبنية: مستغلًا قوة MPV لتجربة تشغيل رائعة ودعم جيد لصيغ الفيديو المختلفة"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:29
 msgid ""
 "Audio and Subtitles: Control track selection and synchronization for both"
-msgstr "الصوت والترجمات: تحكم بإختيار المسار وزامن كلاهما"
+msgstr "الصوت والترجمات: تحكم بإختيار المقطوعة ومزامنة الصوت والترجمة"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:30
 msgid ""
@@ -119,16 +121,16 @@ msgstr "ارفع مستوى الصوت"
 
 #: src/shortcuts.py:30
 msgid "Volume Decrease"
-msgstr "اخفض متسوى الصوت"
+msgstr "اخفض مستوى الصوت"
 
 #: src/shortcuts.py:33 src/shortcuts.py:34 src/shortcuts.py:35
 #: src/window.blp:198
 msgid "Play/Pause"
-msgstr "تشغيل/ايقاف"
+msgstr "تشغيل/إلباث"
 
 #: src/shortcuts.py:36
 msgid "Show/Hide Subtitles"
-msgstr "اظهر/اخفي الترجمات"
+msgstr "اظهر/اخفِ الترجمات"
 
 #: src/shortcuts.py:37 src/shortcuts.py:38 src/shortcuts.py:205
 #: src/window.blp:257
@@ -137,11 +139,11 @@ msgstr "الترجمات"
 
 #: src/shortcuts.py:37
 msgid "Switch to Next Subtitle Track"
-msgstr "التبديل إلى ترجمة المسار التالية"
+msgstr "التبديل إلى مقطوعة الترجمة التالية"
 
 #: src/shortcuts.py:38
 msgid "Switch to Previous Subtitle Track"
-msgstr "التبديل إلى ترجمة المسار السابقة"
+msgstr "التبديل إلى مقطوعة الترجمة السابقة"
 
 #: src/shortcuts.py:39 src/shortcuts.py:40 src/window.py:655 src/window.blp:272
 msgid "Audio"
@@ -149,32 +151,32 @@ msgstr "صوت"
 
 #: src/shortcuts.py:39
 msgid "Switch to Next Audio Track"
-msgstr "التبديل إلى المسار الصوتي التالي"
+msgstr "التبديل إلى المقطوعة الصوتية التالية"
 
 #: src/shortcuts.py:40
 msgid "Switch to Previous Audio Track"
-msgstr "التبديل إلى المسار الصوتي السابق"
+msgstr "التبديل إلى المقطوعة الصوتية السابقة"
 
 #: src/shortcuts.py:41
 msgid "Seek 10s Backward"
-msgstr "اسعي ١٠ث للوراء"
+msgstr "السعي ١٠ث للوراء"
 
 #: src/shortcuts.py:42
 msgid "Seek 10s Forward"
-msgstr "اسعي ١٠ث للأمام"
+msgstr "السعي ١٠ث للأمام"
 
 #: src/shortcuts.py:43
 msgid "Seek 5s Backward"
-msgstr "اسعي ٥ث للوراء"
+msgstr "السعي ٥ث للوراء"
 
 #: src/shortcuts.py:44
 msgid "Seek 5s Forward"
-msgstr "اسعي ٥ث للأمام"
+msgstr "السعي ٥ث للأمام"
 
 #: src/shortcuts.py:45 src/shortcuts.py:46 src/window.py:1572
 #: src/window.blp:350
 msgid "Fullscreen"
-msgstr "ملء الشاشة"
+msgstr "ملأ الشاشة"
 
 #: src/shortcuts.py:54 src/shortcuts.py:55 src/shortcuts.py:56
 #: src/shortcuts.py:57 src/shortcuts.py:58 src/options.blp:285
@@ -184,11 +186,11 @@ msgstr "التقريب"
 
 #: src/shortcuts.py:54 src/shortcuts.py:55 src/shortcuts.py:56
 msgid "Zoom In"
-msgstr "كبِّر"
+msgstr "تكبير"
 
 #: src/shortcuts.py:57 src/shortcuts.py:58
 msgid "Zoom Out"
-msgstr "صغِّر"
+msgstr "تصغير"
 
 #: src/shortcuts.py:59 src/shortcuts.py:60 src/options.blp:611
 #: src/options.blp:635
@@ -201,19 +203,19 @@ msgstr "قلل تأخير الترجمة"
 
 #: src/shortcuts.py:60
 msgid "Increase Subtitle Delay"
-msgstr "زِد تأخير الترجمة"
+msgstr "زيادة تأخير الترجمة"
 
 #: src/shortcuts.py:61 src/shortcuts.py:62
 msgid "Subtitle Position"
-msgstr "موضع الترجمة"
+msgstr "مُوضِع الترجمة"
 
 #: src/shortcuts.py:61
 msgid "Move Subtitles Up"
-msgstr "حرك الترجمات للأعلى"
+msgstr "تحريك الترجمات للأعلى"
 
 #: src/shortcuts.py:62
 msgid "Move Subtitles Down"
-msgstr "حرك الترجمات للاسفل"
+msgstr "تحريك الترجمات للأسفل"
 
 #: src/shortcuts.py:63 src/shortcuts.py:64 src/preferences.blp:89
 msgid "Subtitle Scale"
@@ -238,11 +240,11 @@ msgstr "تأخير الصوت"
 
 #: src/shortcuts.py:66
 msgid "Decrease Audio Delay"
-msgstr "قلل تأخير الصوت"
+msgstr "تقليل تأخير الصوت"
 
 #: src/shortcuts.py:67 src/shortcuts.py:68
 msgid "Increase Audio Delay"
-msgstr "زِد تأخير الصوت"
+msgstr "زيادة تأخير الصوت"
 
 #: src/shortcuts.py:78
 msgid "Go Back One Frame"
@@ -250,23 +252,23 @@ msgstr "عُد إطارًا"
 
 #: src/shortcuts.py:79
 msgid "Advance One Frame"
-msgstr "تقدم إطارًا"
+msgstr "تقدّم إطارًا"
 
 #: src/shortcuts.py:80
 msgid "Seek to the Previous Chapter"
-msgstr "اسعي للفصل السابق"
+msgstr "السعي للفصل السابق"
 
 #: src/shortcuts.py:81
 msgid "Seek to the Next Chapter"
-msgstr "اسعي للفصل التالي"
+msgstr "السعي للفصل التالي"
 
 #: src/shortcuts.py:85
 msgid "Take Screenshot With Subtitles"
-msgstr "ألتقط لقطة شاشة مع الترجمات"
+msgstr "التقاط لقطة شاشة بالترجمات"
 
 #: src/shortcuts.py:86
 msgid "Take Screenshot Without Subtitles"
-msgstr "ألتقط لقطة شاشة بدون الترجمات"
+msgstr "التقاط لقطة شاشة بلا ترجمات"
 
 #: src/shortcuts.py:87
 msgid "Statistics"
@@ -282,7 +284,7 @@ msgstr "التكرار"
 
 #: src/shortcuts.py:89 src/window.blp:325
 msgid "Loop File"
-msgstr "كرّر الملف"
+msgstr "تكرار الملف"
 
 #: src/shortcuts.py:90 src/shortcuts.py:91 src/options.blp:340
 #: src/options.blp:363
@@ -291,11 +293,11 @@ msgstr "التباين"
 
 #: src/shortcuts.py:90
 msgid "Decrease Contrast"
-msgstr "قلل التباين"
+msgstr "تقليل التباين"
 
 #: src/shortcuts.py:91
 msgid "Increase Contrast"
-msgstr "زِد التباين"
+msgstr "زيادة التباين"
 
 #: src/shortcuts.py:92 src/shortcuts.py:93 src/options.blp:394
 #: src/options.blp:417
@@ -304,24 +306,24 @@ msgstr "السطوع"
 
 #: src/shortcuts.py:92
 msgid "Decrease Brightness"
-msgstr "قلل السطوع"
+msgstr "تقليل السطوع"
 
 #: src/shortcuts.py:93
 msgid "Increase Brightness"
-msgstr "زِد السطوع"
+msgstr "زيادة السطوع"
 
 #: src/shortcuts.py:94 src/shortcuts.py:95 src/options.blp:448
 #: src/options.blp:471
 msgid "Gamma"
-msgstr "الجاما"
+msgstr "الچاما"
 
 #: src/shortcuts.py:94
 msgid "Decrease Gamma"
-msgstr "قلل الجاما"
+msgstr "تقليل الچاما"
 
 #: src/shortcuts.py:95
 msgid "Increase Gamma"
-msgstr "زِد الجاما"
+msgstr "زيادة الچاما"
 
 #: src/shortcuts.py:96 src/shortcuts.py:97 src/options.blp:502
 #: src/options.blp:525
@@ -330,11 +332,11 @@ msgstr "التشبع"
 
 #: src/shortcuts.py:96
 msgid "Decrease Saturation"
-msgstr "قلل التشبع"
+msgstr "تقليل التشبع"
 
 #: src/shortcuts.py:97
 msgid "Increase Saturation"
-msgstr "زِد التشبع"
+msgstr "زيادة التشبع"
 
 #: src/shortcuts.py:98 src/shortcuts.py:99 src/shortcuts.py:100
 msgid "Speed"
@@ -342,15 +344,15 @@ msgstr "السرعة"
 
 #: src/shortcuts.py:98
 msgid "Decrease Playback Speed"
-msgstr "قلل سرعة التشغيل"
+msgstr "تقليل سرعة التشغيل"
 
 #: src/shortcuts.py:99
 msgid "Increase Playback Speed"
-msgstr "زِد سرعة التشغيل"
+msgstr "زيادة سرعة التشغيل"
 
 #: src/shortcuts.py:100 src/options.blp:711
 msgid "Reset Playback Speed"
-msgstr "صفّر سرعة التشغيل"
+msgstr "تصفير سرعة التشغيل"
 
 #: src/shortcuts.py:189
 msgid "Display & Video"
@@ -374,7 +376,7 @@ msgstr "المتنوعات"
 
 #: src/window.py:508 src/window.py:1168 src/window.blp:114
 msgid "Add Subtitle Track"
-msgstr "اضف ملف ترجمة"
+msgstr "اضِف ملف ترجمة"
 
 #: src/window.py:510 src/window.py:519
 msgid "None"
@@ -382,15 +384,15 @@ msgstr "لا يوجد"
 
 #: src/window.py:517 src/window.blp:119
 msgid "Add Audio Track"
-msgstr "اضف ملف صوت"
+msgstr "اضِف ملف صوت"
 
 #: src/window.py:556
 msgid "Track"
-msgstr "مسار"
+msgstr "مقطوعة"
 
 #: src/window.py:599 src/playlist.blp:30 src/window.blp:104
 msgid "Add Folder"
-msgstr "إضافة مجلد"
+msgstr "اضِف مجلد"
 
 #: src/window.py:599 src/shortcuts-dialog.blp:21 src/window.blp:89
 #: src/window.blp:452
@@ -403,11 +405,11 @@ msgstr "افتح ملفات"
 
 #: src/window.py:634
 msgid "Add Subtitle"
-msgstr "اضف ترجمة"
+msgstr "اضِف ترجمة"
 
 #: src/window.py:637
 msgid "Add Audio"
-msgstr "اضف صوت"
+msgstr "اضِف صوت"
 
 #: src/window.py:650
 msgid "Subtitle"
@@ -419,12 +421,12 @@ msgstr "وسائط"
 
 #: src/window.py:720 src/playlist.blp:36 src/window.blp:109
 msgid "Add URL"
-msgstr "إضافة رابط"
+msgstr "اضِف رابط"
 
 #: src/window.py:720 src/shortcuts-dialog.blp:26 src/window.blp:94
 #: src/window.blp:462
 msgid "Open URL"
-msgstr "فتح رابط"
+msgstr "افتح رابط"
 
 #: src/window.py:733
 msgid "URL"
@@ -436,7 +438,7 @@ msgstr "إضافة"
 
 #: src/window.py:741 src/window.blp:78
 msgid "Open"
-msgstr "افتح"
+msgstr "فتح"
 
 #: src/window.py:914
 msgid "Chapter"
@@ -452,7 +454,7 @@ msgstr "شغِّل"
 
 #: src/window.py:1572
 msgid "Exit Fullscreen"
-msgstr "اُخرج من ملء الشاشة"
+msgstr "اُخرج من ملئ الشاشة"
 
 #: src/options.blp:14
 msgid "Options"
@@ -460,11 +462,11 @@ msgstr "الخيارات"
 
 #: src/options.blp:32
 msgid "Reset All"
-msgstr "صفّر الكل"
+msgstr "تصفير الكل"
 
 #: src/options.blp:44
 msgid "Reset Aspect Ratio"
-msgstr "صفّر نسبة الأبعاد"
+msgstr "تصفير نسبة الأبعاد"
 
 #: src/options.blp:54
 msgid "Aspect Ratio"
@@ -472,7 +474,7 @@ msgstr "نسبة الأبعاد"
 
 #: src/options.blp:102
 msgid "Reset Crop"
-msgstr "إعادة تعيين القص"
+msgstr "تصفير القص"
 
 #: src/options.blp:112
 msgid "Crop"
@@ -480,7 +482,7 @@ msgstr "قص"
 
 #: src/options.blp:161
 msgid "Reset Rotation"
-msgstr "صفّر الدوران"
+msgstr "تصفير الدوران"
 
 #: src/options.blp:171
 msgid "Rotate"
@@ -488,15 +490,15 @@ msgstr "الدوران"
 
 #: src/options.blp:197
 msgid "Rotate Left"
-msgstr "ادِر يسارًا"
+msgstr "تدوير لليسار"
 
 #: src/options.blp:205
 msgid "Rotate Right"
-msgstr "ادِر يمينًا"
+msgstr "تدوير لليمين"
 
 #: src/options.blp:218
 msgid "Reset Flip"
-msgstr "صفّر القَلب"
+msgstr "تصفير القَلب"
 
 #: src/options.blp:228
 msgid "Flip"
@@ -504,35 +506,35 @@ msgstr "القَلب"
 
 #: src/options.blp:254
 msgid "Flip Horizontally"
-msgstr "اقلب افقيًا"
+msgstr "القَلب أفقيًا"
 
 #: src/options.blp:262
 msgid "Flip Vertically"
-msgstr "اقلب عموديًا"
+msgstr "القَلب عموديًا"
 
 #: src/options.blp:275
 msgid "Reset Zoom"
-msgstr "صفّر التقريب"
+msgstr "تصفير التقريب"
 
 #: src/options.blp:330
 msgid "Reset Contrast"
-msgstr "صفّر التباين"
+msgstr "تصفير التباين"
 
 #: src/options.blp:384
 msgid "Reset Brightness"
-msgstr "صفّر السطوع"
+msgstr "تصفير السطوع"
 
 #: src/options.blp:438
 msgid "Reset Gamma"
-msgstr "صفّر الجاما"
+msgstr "تصفير الچاما"
 
 #: src/options.blp:492
 msgid "Reset Saturation"
-msgstr "صفّر التشبع"
+msgstr "تصفير التشبع"
 
 #: src/options.blp:546
 msgid "Reset Hue"
-msgstr "صفّر تدرج اللون"
+msgstr "تصفير تدرج اللون"
 
 #. TRANSLATORS: Do not use "Color" or "Temperature", those are different things
 #: src/options.blp:557 src/options.blp:580
@@ -541,11 +543,11 @@ msgstr "تدرج اللون"
 
 #: src/options.blp:601
 msgid "Reset Subtitle Delay"
-msgstr "صفّر تأخير الترجمة"
+msgstr "تصفير تأخير الترجمة"
 
 #: src/options.blp:656
 msgid "Reset Audio Delay"
-msgstr "صفّر تأخير الصوت"
+msgstr "تصفير تأخير الصوت"
 
 #: src/options.blp:721 src/options.blp:745
 msgid "Playback Speed"
@@ -557,11 +559,11 @@ msgstr "قائمة التشغيل"
 
 #: src/playlist.blp:91
 msgid "Add to Playlist"
-msgstr "اضف لقائمة التشغيل"
+msgstr "اضِف لقائمة التشغيل"
 
 #: src/preferences.blp:16
 msgid "Open New Window for New Files"
-msgstr "افتح نافذة جديدة للملفات الجديدة"
+msgstr "فتح نافذة جديدة لكل ملف"
 
 #: src/preferences.blp:20
 msgid "Subtitle Color"
@@ -569,7 +571,7 @@ msgstr "لون الترجمة"
 
 #: src/preferences.blp:33 src/preferences.blp:79
 msgid "Reset"
-msgstr "صفّر"
+msgstr "تصفير"
 
 #: src/preferences.blp:43
 msgid "Subtitle Font"
@@ -605,32 +607,32 @@ msgstr "مساواة الصوت"
 
 #: src/preferences.blp:122
 msgid "Save Video Position on Close"
-msgstr "احفظ موضع الفيديو عند الإغلاق"
+msgstr "حفظ تقدُّم الفيديو عند الإغلاق"
 
 #: src/preferences.blp:123
 msgid "Also save options like brightness, subtitle delay, etc."
-msgstr "يحفظ ايضًا الخيارات كالسطوع، تأخير الترجمة، إلخ."
+msgstr "يحفظ أيضًا الخيارات كالسطوع، تأخير الترجمة، إلخ."
 
 #: src/preferences.blp:138
 msgid ""
 "Requires flatpak permission to read the folder where the video is stored"
-msgstr "قراءة المجلد الذي يتواجد فيه الفيديو يتطلب صلاحية من فلاتباك"
+msgstr "يتطلب صلاحية من فلاتباك لقراءة المجلد الذي يتواجد فيه الفيديو"
 
 #: src/shortcuts-dialog.blp:8
 msgid "Shortcuts"
-msgstr "الإختصارات"
+msgstr "الاختصارات"
 
 #: src/shortcuts-dialog.blp:31
 msgid "Add Files to Playlist"
-msgstr "اضف ملفات لقائمة التشغيل"
+msgstr "اضِف ملفات لقائمة التشغيل"
 
 #: src/shortcuts-dialog.blp:36
 msgid "Add Folder to Playlist"
-msgstr "إضافة مجلد لقائمة التشغيل"
+msgstr "اضِف مجلد لقائمة التشغيل"
 
 #: src/shortcuts-dialog.blp:41
 msgid "Add URL to Playlist"
-msgstr "إضافة رابط إلى قائمة التشغيل"
+msgstr "اضِف رابط لقائمة التشغيل"
 
 #: src/shortcuts-dialog.blp:46
 msgid "Open Subtitles Menu"
@@ -642,15 +644,15 @@ msgstr "افتح قائمة الصوت"
 
 #: src/shortcuts-dialog.blp:56
 msgid "Show Shortcuts"
-msgstr "اظهر الإختصارات"
+msgstr "إظهار الاختصارات"
 
 #: src/shortcuts-dialog.blp:61
 msgid "Close Window"
-msgstr "اغلق النافذة"
+msgstr "إغلاق النافذة"
 
 #: src/shortcuts-dialog.blp:66
 msgid "Quit"
-msgstr "غادِر"
+msgstr "خروج"
 
 #: src/window.blp:130
 msgid "Main Menu"
@@ -658,7 +660,7 @@ msgstr "القائمة الرئيسية"
 
 #: src/window.blp:145
 msgid "Keyboard Shortcuts"
-msgstr "إختصارات لوحة المفاتيح"
+msgstr "اختصارات لوحة المفاتيح"
 
 #: src/window.blp:150
 msgid "About Cine"
@@ -678,11 +680,11 @@ msgstr "الفيديو"
 
 #: src/window.blp:303
 msgid "Shuffle Playlist"
-msgstr "اخلط قائمة التشغيل"
+msgstr "خلط قائمة التشغيل"
 
 #: src/window.blp:314
 msgid "Loop Playlist"
-msgstr "كرّر قائمة التشغيل"
+msgstr "تكرار قائمة التشغيل"
 
 #: src/window.blp:382
 msgid "Toggle Elapsed/Remaining"
@@ -694,7 +696,7 @@ msgstr "اسحب وأفلت الملفات هنا"
 
 #: src/window.blp:441
 msgid "Open…"
-msgstr "افتح..."
+msgstr "افتح…"
 
 #~ msgid "Muted"
 #~ msgstr "كتم الصوت"
