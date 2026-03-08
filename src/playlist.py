@@ -136,7 +136,6 @@ class Playlist(Adw.Dialog):
         for index, item in enumerate(playlist):
             path = item.get("filename", "")
             path_with_ext = os.path.basename(path)
-            file_title = path_with_ext
             parent_dir = os.path.basename(os.path.dirname(path))
             dir = parent_dir if parent_dir else path
             dir = GLib.markup_escape_text(dir)
@@ -152,13 +151,17 @@ class Playlist(Adw.Dialog):
                 content_type = "mpv-url"
                 file_title = item.get("title") or file_title
             else:
-                info = Gio.File.new_for_path(path).query_info(
-                    "standard::content-type", Gio.FileQueryInfoFlags.NONE, None
-                )
-                content_type = info.get_content_type()
+                try:
+                    info = Gio.File.new_for_path(path).query_info(
+                        "standard::content-type", Gio.FileQueryInfoFlags.NONE, None
+                    )
+                    content_type = info.get_content_type()
+                except:
+                    content_type = "error"
 
             if content_type == "inode/directory":
                 icon_name = "cine-folder-symbolic"
+                file_title = path_with_ext
                 if not os.listdir(path):
                     row.set_sensitive(False)
             elif content_type:
@@ -172,6 +175,8 @@ class Playlist(Adw.Dialog):
                     icon_name = "cine-image-x-generic-symbolic"
                 elif content_type == "mpv-url":
                     icon_name = "cine-globe-symbolic"
+                elif content_type == "error":
+                    icon_name = "cine-warning-symbolic"
 
             file_title = GLib.markup_escape_text(file_title)
             row.set_subtitle(file_title)

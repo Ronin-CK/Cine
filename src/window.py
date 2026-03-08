@@ -156,6 +156,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.local_path: bool = True
         self.last_preview_update: float = 0
         self.last_preview_seek: int = 0
+        self.error_count: int = 0
 
         self.mpv_ctx: mpv.MpvRenderContext
 
@@ -1530,18 +1531,32 @@ class CineWindow(Adw.ApplicationWindow):
                         self.preview_player = None
 
             GLib.idle_add(set)
+            self.error_count = 0
 
         @self.mpv.event_callback("end-file")
         def on_end_file(event):
             GLib.idle_add(self.spinner.set_visible, False)
             info = event.as_dict()
             reason = info["reason"]
+
             if reason == b"error":
+                # Avoid stopping playback on last file/folder error
+                current_pos = self.mpv.playlist_pos
+                playlist_count = len(cast(list, self.mpv.playlist))
+                if current_pos == playlist_count - 1:
+                    self.mpv.playlist_pos = 0
+
                 print(f"File error path: {self.loaded_path}")
-                error = info["file_error"]
-                toast = Adw.Toast.new(_("File Error") + f": {error.decode('utf-8')}")
-                self.toast_overlay.add_toast(toast)
-                self.mpv.stop()
+                self.error_count += 1
+
+                if self.error_count in (1, 20):
+                    error = info["file_error"].decode("utf-8")
+                    toast = Adw.Toast.new(_("File Error") + f": {error}")
+                    self.toast_overlay.add_toast(toast)
+
+                if self.error_count == 20:
+                    self.mpv.stop()
+                    self.error_count = 0
 
         @self.mpv.property_observer("path")
         def on_path_change(_name, has_file):
